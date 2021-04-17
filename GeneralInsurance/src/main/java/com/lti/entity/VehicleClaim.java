@@ -9,8 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="vehicle_claim")
 public class VehicleClaim {
 	@Id
 	@SequenceGenerator(name="vehicleclaim_seq", initialValue=6001, allocationSize=1)

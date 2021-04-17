@@ -34,12 +34,12 @@ public class InsuranceServiceImpl implements InsuranceService{
 		
 	}
 
-	public Customer loginCustomer(String userName, String password) {
-		return ir.loginCustomer(userName, password);
+	public Customer loginCustomer(String userEmail, String password) {
+		return ir.loginCustomer(userEmail, password);
 	}
 
-	public Admin loginAdmin(String adminName, String adminPassword) {
-		return ir.loginAdmin(adminName, adminPassword);
+	public Admin loginAdmin(String adminEmail, String adminPassword) {
+		return ir.loginAdmin(adminEmail, adminPassword);
 	}
 
 	public List<Policy> getAQuote(String policyFor) {

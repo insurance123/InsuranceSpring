@@ -18,8 +18,8 @@ public interface InsuranceService {
 	
 	public void addOrUpdateCustomer(Customer customer);
 	public void registerAdmin(Admin admin);
-	public Customer loginCustomer(String userName, String password);
-	public Admin loginAdmin(String adminName, String adminPassword);
+	public Customer loginCustomer(String userEmail, String password);
+	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
 	public void buyMotorInsurance(Vehicle vehicle);
 	public void buyTravelInsurance(Travel travel);

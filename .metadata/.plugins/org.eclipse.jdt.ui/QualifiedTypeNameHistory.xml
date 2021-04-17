@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.lti.entity.Customer"/>
+    <fullyQualifiedTypeName name="com.lti.entity.Admin"/>
+    <fullyQualifiedTypeName name="com.lti.entity.Policy"/>
+    <fullyQualifiedTypeName name="com.lti.entity.Travel"/>
+    <fullyQualifiedTypeName name="com.lti.entity.CustomerVehiclePolicy"/>
+    <fullyQualifiedTypeName name="com.lti.entity.CustomerTravelPolicy"/>
+    <fullyQualifiedTypeName name="com.lti.entity.ContactUs"/>
+    <fullyQualifiedTypeName name="com.lti.entity.Vehicle"/>
+    <fullyQualifiedTypeName name="com.lti.entity.VehicleClaim"/>
+    <fullyQualifiedTypeName name="com.lti.entity.TravelClaim"/>
+    <fullyQualifiedTypeName name="com.lti.entity.ClaimStatus"/>
+    <fullyQualifiedTypeName name="com.lti.repository.InsuranceRepo"/>
+    <fullyQualifiedTypeName name="com.lti.service.InsuranceService"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
+    <fullyQualifiedTypeName name="javax.persistence.Table"/>
+    <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
+    <fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
+    <fullyQualifiedTypeName name="com.lti.dto.LoginDto"/>
+    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
+</qualifiedTypeNameHistroy>

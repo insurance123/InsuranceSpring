@@ -2,10 +2,13 @@ package com.lti.resource;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lti.dto.LoginDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -33,22 +37,30 @@ public class InsuranceController {
 	@Autowired
 	InsuranceService is;
 	
-	public void addOrUpdateCustomer(Customer customer) {
-		is.addOrUpdateCustomer(customer);
-	}
-
-	public void registerAdmin(Admin admin) {
+	
+	 @PostMapping(value = "/registercustomer")
+	    public void addOrUpdateCustomer(@RequestBody Customer customer) {
+	        is.addOrUpdateCustomer(customer);
+	        
+	    }
+	 
+	 @PostMapping(value = "/registeradmin")
+	 public void registerAdmin(@RequestBody Admin admin) {
 		is.registerAdmin(admin);
 		
 	}
-
-	public Customer loginCustomer(String userName, String password) {
-		return is.loginCustomer(userName, password);
-	}
-
-	public Admin loginAdmin(String adminName, String adminPassword) {
-		return is.loginAdmin(adminName, adminPassword);
-	}
+	
+	
+	 @PostMapping(value = "/logincustomer")
+	    public Customer loginCustomer(@RequestBody LoginDto loginData, HttpSession session) {
+	        return is.loginCustomer(loginData.getUserEmail(), loginData.getPassword());
+	    }
+	 
+	 
+	 @PostMapping(value = "/loginadmin")
+	    public Admin loginAdmin(@RequestBody LoginDto loginData, HttpSession session) {
+	        return is.loginAdmin(loginData.getAdminEmail(), loginData.getPassword());
+	    }
 
 	@RequestMapping(value="/getQuote", method=RequestMethod.POST)
 	public List<Policy> getAQuote(@RequestBody @RequestParam("policyFor") String policyFor) {

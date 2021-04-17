@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContextType;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -29,6 +30,7 @@ public class Customer {
 	String password;
 	String userEmail;
 	String userPhone;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	LocalDate dateOfBirth;
 	
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
