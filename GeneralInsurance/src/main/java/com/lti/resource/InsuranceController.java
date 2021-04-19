@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.LoginDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
@@ -72,16 +73,16 @@ public class InsuranceController {
 		}
 
 	 @PostMapping(value="buyMotorInsurance")
-		public CustomerVehiclePolicy buyMotorInsurance(@RequestBody CustomerVehiclePolicy cvp, @RequestParam int userId, @RequestParam int policyId, @RequestParam int vehicleId) {
-			cvp.setCustomer(dao.findCustomerById(userId));
-			cvp.setVehicle(dao.findVehicleById(vehicleId));
-			cvp.setPolicy(dao.findPolicyById(policyId));
-			return is.buyMotorInsurance(cvp);
+		public CustomerVehiclePolicy buyMotorInsurance(@RequestBody CustomerVehiclePolicyDto cvp) {
+//			cvp.setCustomer(dao.findCustomerById(userId));
+//			cvp.setVehicle(dao.findVehicleById(vehicleId));
+//			cvp.setPolicy(dao.findPolicyById(policyId));
+			return dao.buyMotorInsurance(cvp);
 			
 		}
 	 @PostMapping(value="addVehicle") 
-		public Vehicle addVehicle(@RequestBody Vehicle vehicle, @RequestParam("userId")int userId) {
-			vehicle.setCustomer(dao.findCustomerById(userId));
+		public Vehicle addVehicle(@RequestBody Vehicle vehicle) {
+//			vehicle.setCustomer(dao.findCustomerById(userId));
 			return is.addVehicle(vehicle);
 		}
 		
@@ -149,7 +150,8 @@ public class InsuranceController {
 		is.addMotorClaim(claim);
 	}
 
-	public Customer findCustomerById(int custId) {
+	@GetMapping(value = "getUserById")
+	public Customer findCustomerById(@RequestParam int custId) {
 		return is.findCustomerById(custId);
 	}
 
@@ -215,6 +217,11 @@ public class InsuranceController {
 
 	public TravelClaim getTravelClaimById(int claimId) {
 		return is.getTravelClaimById(claimId);
+	}
+	
+	@GetMapping(value = "/getPolicyFor")
+	public List<Policy> getPolicyFor(@RequestParam String policyFor) {
+		return is.getPolicyFor(policyFor);
 	}
 
 }

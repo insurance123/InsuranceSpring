@@ -25,6 +25,8 @@ public class CustomerVehiclePolicy {
 	LocalDate startDate;
 	LocalDate endDate;
 	double coverageAmount;
+	double premiumAmount;
+	
 	
 	@ManyToOne
 	@JoinColumn(name="customerId")
@@ -66,6 +68,12 @@ public class CustomerVehiclePolicy {
 	}
 	public void setCoverageAmount(double coverageAmount) {
 		this.coverageAmount = coverageAmount;
+	}
+	public double getPremiumAmount() {
+		return premiumAmount;
+	}
+	public void setPremiumAmount(double premiumAmount) {
+		this.premiumAmount = premiumAmount;
 	}
 	@JsonIgnore
 	public Customer getCustomer() {

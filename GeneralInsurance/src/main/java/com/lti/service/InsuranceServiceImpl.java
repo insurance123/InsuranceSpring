@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -46,7 +47,7 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.getAQuote(policyFor);
 	}
 
-	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp) {
 		 return ir.buyMotorInsurance(cvp);
 		
 	}
@@ -162,6 +163,12 @@ public class InsuranceServiceImpl implements InsuranceService{
 
 	public Travel findTravelById(int travelId) {
 		return ir.findTravelById(travelId);
+	}
+
+	@Override
+	public List<Policy> getPolicyFor(String policyFor) {
+		// TODO Auto-generated method stub
+		return ir.getPolicyFor(policyFor);
 	}
 
 }

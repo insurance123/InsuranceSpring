@@ -11,6 +11,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ClaimStatus;
 import com.lti.entity.ContactUs;
@@ -76,8 +77,16 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		
 			//buyMotorInsurance
 			@Transactional
-			public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
-				return em.merge(cvp);
+			public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp) {
+				CustomerVehiclePolicy cp = new CustomerVehiclePolicy();
+				cp.setStartDate(cvp.getStartDate());
+				cp.setEndDate(cvp.getEndDate());
+				cp.setCoverageAmount(cvp.getCoverageAmount());
+				cp.setPremiumAmount(cvp.getPremiumAmount());
+				cp.setCustomer(findCustomerById(cvp.getCustomerId()));
+				cp.setPolicy(findPolicyById(cvp.getPolicyId()));
+				cp.setVehicle(findVehicleById(cvp.getVehicleId()));
+				return em.merge(cp);
 			}
 			
 			//addVehicle
@@ -267,6 +276,16 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	//findTravelById
 	public Travel findTravelById(int travelId) {
 		return em.find(Travel.class, travelId);
+	}
+
+	@Override
+	public List<Policy> getPolicyFor(String policyFor) {
+		// TODO Auto-generated method stub
+		String jpql = "select p from Policy p where p.policyFor=:pfor";
+		TypedQuery<Policy> query = em.createQuery(jpql,Policy.class);
+		query.setParameter("pfor",policyFor);
+		List<Policy> policy = query.getResultList();
+		return policy;
 	}
 
 	

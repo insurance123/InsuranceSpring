@@ -32,12 +32,13 @@ public class Vehicle {
 	String engineNumber;
 	String chassisNumber;
 	String fuelType;
+	int age;
 	
 	@ManyToOne
 	@JoinColumn(name="customerId")
 	Customer customer;
 	
-	@OneToMany(mappedBy="vehicle", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="vehicle", orphanRemoval = true, cascade=CascadeType.ALL)
 	List<CustomerVehiclePolicy> customerVehiclePolicy;
 	
 	
@@ -94,6 +95,13 @@ public class Vehicle {
 	}
 	public void setFuelType(String fuelType) {
 		this.fuelType = fuelType;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
 	}
 	public Customer getCustomer() {
 		return customer;

@@ -2,6 +2,7 @@ package com.lti.service;
 
 import java.util.List;
 
+import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -21,7 +22,7 @@ public interface InsuranceService {
 	public Customer loginCustomer(String userEmail, String password);
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
-	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp);
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
 	public Vehicle addVehicle(Vehicle vehicle);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
 	public Travel addTravel(Travel travel);
@@ -49,5 +50,6 @@ public interface InsuranceService {
 	public TravelClaim getTravelClaimById(int claimId);
 	public Vehicle findVehicleById(int vehicleId);
 	public Travel findTravelById(int travelId);
+	public List<Policy> getPolicyFor(String policyFor);
 
 }
