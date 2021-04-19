@@ -46,23 +46,29 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.getAQuote(policyFor);
 	}
 
-	public void buyMotorInsurance(Vehicle vehicle) {
-		ir.buyMotorInsurance(vehicle);
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
+		 return ir.buyMotorInsurance(cvp);
+		
+	}
+	
+	public Vehicle addVehicle(Vehicle vehicle) {
+		return ir.addVehicle(vehicle);
+	}
+
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
+		return ir.buyTravelInsurance(ctp);
+	}
+	public Travel addTravel(Travel travel) {
+		return ir.addTravel(travel);
+	}
+
+	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp) {
+		 return ir.renewMotorInsurance(cvp);
 		
 	}
 
-	public void buyTravelInsurance(Travel travel) {
-		ir.buyTravelInsurance(travel);
-		
-	}
-
-	public void renewMotorInsurance(CustomerVehiclePolicy cvp) {
-		ir.renewMotorInsurance(cvp);
-		
-	}
-
-	public void renewTravelInsurance(CustomerTravelPolicy ctp) {
-		ir.renewTravelInsurance(ctp);
+	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp) {
+		return ir.renewTravelInsurance(ctp);
 	}
 
 	public void addNewQuery(ContactUs contactUs) {
@@ -148,6 +154,14 @@ public class InsuranceServiceImpl implements InsuranceService{
 
 	public TravelClaim getTravelClaimById(int claimId) {
 		return ir.getTravelClaimById(claimId);
+	}
+
+	public Vehicle findVehicleById(int vehicleId) {
+		return ir.findVehicleById(vehicleId);
+	}
+
+	public Travel findTravelById(int travelId) {
+		return ir.findTravelById(travelId);
 	}
 
 }

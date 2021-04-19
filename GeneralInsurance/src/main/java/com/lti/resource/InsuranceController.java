@@ -27,6 +27,7 @@ import com.lti.entity.Travel;
 import com.lti.entity.TravelClaim;
 import com.lti.entity.Vehicle;
 import com.lti.entity.VehicleClaim;
+import com.lti.repository.InsuranceRepo;
 import com.lti.service.InsuranceService;
 
 
@@ -36,6 +37,9 @@ import com.lti.service.InsuranceService;
 public class InsuranceController {
 	@Autowired
 	InsuranceService is;
+	
+	@Autowired
+	InsuranceRepo dao;
 	
 	
 	 @PostMapping(value = "/registercustomer")
@@ -62,49 +66,81 @@ public class InsuranceController {
 	        return is.loginAdmin(loginData.getAdminEmail(), loginData.getPassword());
 	    }
 
-	@RequestMapping(value="/getQuote", method=RequestMethod.POST)
-	public List<Policy> getAQuote(@RequestBody @RequestParam("policyFor") String policyFor) {
-		return is.getAQuote(policyFor);
-	}
+	 @PostMapping(value="/getQuote")
+		public List<Policy> getAQuote(@RequestBody @RequestParam("policyFor") String policyFor) {
+			return is.getAQuote(policyFor);
+		}
 
-	public void buyMotorInsurance(Vehicle vehicle) {
-		is.buyMotorInsurance(vehicle);
+	 @PostMapping(value="buyMotorInsurance")
+		public CustomerVehiclePolicy buyMotorInsurance(@RequestBody CustomerVehiclePolicy cvp, @RequestParam int userId, @RequestParam int policyId, @RequestParam int vehicleId) {
+			cvp.setCustomer(dao.findCustomerById(userId));
+			cvp.setVehicle(dao.findVehicleById(vehicleId));
+			cvp.setPolicy(dao.findPolicyById(policyId));
+			return is.buyMotorInsurance(cvp);
+			
+		}
+	 @PostMapping(value="addVehicle") 
+		public Vehicle addVehicle(@RequestBody Vehicle vehicle, @RequestParam("userId")int userId) {
+			vehicle.setCustomer(dao.findCustomerById(userId));
+			return is.addVehicle(vehicle);
+		}
 		
-	}
-
-	public void buyTravelInsurance(Travel travel) {
-		is.buyTravelInsurance(travel);
+		@PostMapping(value="buyTravelInsurance")
+		public CustomerTravelPolicy buyTravelInsurance(@RequestBody CustomerTravelPolicy ctp, @RequestParam int userId, @RequestParam int policyId, @RequestParam int travelId) {
+			ctp.setCustomer(dao.findCustomerById(userId));
+			ctp.setPolicy(dao.findPolicyById(policyId));
+			ctp.setTravel(dao.findTravelById(travelId));
+			return is.buyTravelInsurance(ctp);
+			
+		}
 		
-	}
+		@PostMapping(value="addTravel")
+		public Travel addTravel(@RequestBody Travel travel, @RequestParam("userId")int userId) {
+			travel.setCustomer(dao.findCustomerById(userId));
+			return is.addTravel(travel);
+		}
 
-	public void renewMotorInsurance(CustomerVehiclePolicy cvp) {
-		is.renewMotorInsurance(cvp);
+	 
+		@PostMapping(value="renewMotorInsurance")
+		public CustomerVehiclePolicy renewMotorInsurance(@RequestBody CustomerVehiclePolicy cvp, @RequestParam int userId, @RequestParam int policyId, @RequestParam int vehicleId) {
+			cvp.setCustomer(dao.findCustomerById(userId));
+	        cvp.setVehicle(dao.findVehicleById(vehicleId));
+	        cvp.setPolicy(dao.findPolicyById(policyId));
+	        
+			return is.renewMotorInsurance(cvp);
+			
+		}
+
+		@PostMapping(value="renewTravelInsurance")
+		public CustomerTravelPolicy renewTravelInsurance(@RequestBody CustomerTravelPolicy ctp,@RequestParam int userId, @RequestParam int policyId, @RequestParam int travelId) {
+			ctp.setCustomer(dao.findCustomerById(userId));
+	        ctp.setTravel(dao.findTravelById(travelId));
+	        ctp.setPolicy(dao.findPolicyById(policyId));
+			return is.renewTravelInsurance(ctp);
 		
-	}
+		}
+	@PostMapping(value="/addnewquery")
+    public void addNewQuery(@RequestBody ContactUs contactUs) {
+        is.addNewQuery(contactUs);
+        
+    }
 
-	public void renewTravelInsurance(CustomerTravelPolicy ctp) {
-		is.renewTravelInsurance(ctp);
-	}
-
-	public void addNewQuery(ContactUs contactUs) {
-		is.addNewQuery(contactUs);
-		
-	}
-
-	public String fetchQueryWithQueryId(int queryId) {
-		return is.fetchQueryWithQueryId(queryId);
-	}
-
-	public List<ContactUs> viewAllQueries() {
-		return is.viewAllQueries();
-	}
+	@PostMapping("/fetchquerywithid")
+    public String fetchQueryWithQueryId(@RequestParam("queryId") int queryId) {
+        return is.fetchQueryWithQueryId(queryId);
+    }
 	
-	@RequestMapping(value="/getVehiclePolicies", method=RequestMethod.GET)
+	 @PostMapping("/fetchallqueries")
+    public List<ContactUs> viewAllQueries() {
+        return is.viewAllQueries();
+    }
+	
+	@GetMapping(value="/getVehiclePolicies")
 	public List<CustomerVehiclePolicy> ViewUserMotorPolicies(@RequestBody @RequestParam("userId") int customerId) {
 		return is.ViewUserMotorPolicies(customerId);
 	}
 	
-	@RequestMapping(value="/getTravelPolicies", method=RequestMethod.POST)
+	@GetMapping(value="/getTravelPolicies")
 	public List<CustomerTravelPolicy> viewUserTravelPolicies(@RequestBody @RequestParam("userId") int customerId) {
 		return is.viewUserTravelPolicies(customerId);
 	}
@@ -117,7 +153,8 @@ public class InsuranceController {
 		return is.findCustomerById(custId);
 	}
 
-	public void addOrUpdatePolicy(Policy policy) {
+	@PostMapping(value = "/addPolicy")
+	public void addOrUpdatePolicy(@RequestBody Policy policy) {
 		is.addOrUpdatePolicy(policy);
 		
 	}
@@ -147,13 +184,20 @@ public class InsuranceController {
 		return is.viewTravelClaims(customerId);
 	}
 
-	public List<VehicleClaim> viewPendingMotorClaims() {
-		return is.viewPendingMotorClaims();
-	}
+	@GetMapping(value="/viewpendingmotorclaims")
+    public List<VehicleClaim> viewPendingMotorClaims() {
+        List<VehicleClaim> vehicleclaims = is.viewPendingMotorClaims();
+        return vehicleclaims;
+    }
 
-	public List<TravelClaim> viewPendingTravelClaims() {
-		return is.viewPendingTravelClaims();
-	}
+ 
+
+    @GetMapping(value="/viewpendingtravelclaims")
+    public List<TravelClaim> viewPendingTravelClaims() {
+        List<TravelClaim> travelclaims =is.viewPendingTravelClaims();
+        return travelclaims;
+    }
+    
 	@PutMapping(value="/updateStatus")
 	public void updateVehicleClaimStatus(@RequestBody VehicleClaim vc, @RequestParam("status") String status) {
 		is.updateVehicleClaimStatus(vc,status);

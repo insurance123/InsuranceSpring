@@ -21,10 +21,12 @@ public interface InsuranceService {
 	public Customer loginCustomer(String userEmail, String password);
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
-	public void buyMotorInsurance(Vehicle vehicle);
-	public void buyTravelInsurance(Travel travel);
-	public void renewMotorInsurance(CustomerVehiclePolicy cvp);
-	public void renewTravelInsurance(CustomerTravelPolicy ctp);
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp);
+	public Vehicle addVehicle(Vehicle vehicle);
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
+	public Travel addTravel(Travel travel);
+	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
+	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);
 	public String fetchQueryWithQueryId(int queryId);
 	public List<ContactUs> viewAllQueries();
@@ -45,6 +47,7 @@ public interface InsuranceService {
 	public VehicleClaim getVehicleClaimById(int claimId);
 	public void updateTravelClaimStatus(TravelClaim tc);
 	public TravelClaim getTravelClaimById(int claimId);
-	
+	public Vehicle findVehicleById(int vehicleId);
+	public Travel findTravelById(int travelId);
 
 }

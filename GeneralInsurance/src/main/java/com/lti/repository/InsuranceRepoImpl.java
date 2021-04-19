@@ -74,29 +74,42 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 			return policy;
 		}
 		
-		//buyMotorInsurance
-		@Transactional
-		public void buyMotorInsurance(Vehicle vehicle) {
-			em.merge(vehicle);
-		}
-	
-		//buyTravelInsurance
-		@Transactional
-		public void buyTravelInsurance(Travel travel) {
-			em.merge(travel);
-		}
+			//buyMotorInsurance
+			@Transactional
+			public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
+				return em.merge(cvp);
+			}
+			
+			//addVehicle
+			@Transactional
+			public Vehicle addVehicle(Vehicle vehicle) {
+				return em.merge(vehicle);
+			}
 		
+			//buyTravelInsurance
+			@Transactional
+			public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
+				return em.merge(ctp);
+			}
+			
+			//addTravel
+			@Transactional
+			public Travel addTravel(Travel travel) {
+				return em.merge(travel);
+			}
+	
 		//renewMotorInsurance
 		@Transactional
-		public void renewMotorInsurance(CustomerVehiclePolicy cvp){
-			em.merge(cvp);
+		public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp){
+			return em.merge(cvp);
+			
 			
 		}
 		
 		//renewTravelInsurance
 		@Transactional
-		public void renewTravelInsurance(CustomerTravelPolicy ctp){
-			em.merge(ctp);
+		public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp){
+			return em.merge(ctp);
 		}
 			
 		@Transactional
@@ -105,12 +118,7 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 
 		}
 		
-// Fetch query with queryID
-		public String fetchQueryWithQueryId(int queryId) {
-			ContactUs contactUs = em.find(ContactUs.class, queryId);
-			return contactUs.getQuery();
-		}
-
+		
 		// Fetch all queries in contactsUS table
 		public List<ContactUs> viewAllQueries() {
 			String jpql = "select q from ContactUs q";
@@ -143,108 +151,127 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 			return policies;
 		}
 		
+		//viewMotorClaims
+		@Transactional
+		public List<VehicleClaim> viewMotorClaims(int customerId) {
+			System.out.println(customerId);
+			Customer customer = em.find(Customer.class, customerId);
+			List<CustomerVehiclePolicy> policies = customer.getCustomerVehiclePolicy();
+			List<VehicleClaim> claims = new ArrayList<VehicleClaim>();
+			for(CustomerVehiclePolicy cvp: policies) {
+				claims.add(cvp.getVehicleClaim());
+			}
+			return claims;
+		}
+		
+		//viewTravelPolicy
+		@Transactional
+		public List<TravelClaim> viewTravelClaims(int customerId) {
+			Customer customer = em.find(Customer.class, customerId);
+			List<CustomerTravelPolicy> policies = customer.getCustomerTravelPolicy();
+			List<TravelClaim> claims = new ArrayList<TravelClaim>();
+			for(CustomerTravelPolicy ctp: policies) {
+				claims.add(ctp.getTravelClaim());
+			}
+			return claims;
+		}
+		
+		
+		//viewPendingMotorClaims
+		public List<VehicleClaim> viewPendingMotorClaims(){        
+	        String jpql="select vc from VehicleClaim vc where vc.claimStatus =:status";
+	        TypedQuery<VehicleClaim> query=em.createQuery(jpql,VehicleClaim.class);
+	        query.setParameter("status", false);
+	        return query.getResultList();
+	    }
+		
+		//viewPendingTravelClaims
+		public List<TravelClaim> viewPendingTravelClaims(){        
+	        String jpql="select tc from TravelClaim tc where tc.claimStatus =:status";
+	        TypedQuery<TravelClaim> query=em.createQuery(jpql,TravelClaim.class);
+	        query.setParameter("status", false);
+	        return query.getResultList();
+	    }
+
+		
+		//updateVehicleClaimStatus
+		@Transactional
+		public void updateVehicleClaimStatus(VehicleClaim vc, String status){
+			vc.setClaimStatus(ClaimStatus.ACCEPTED);
+			em.merge(vc);
+		}
+		public VehicleClaim getVehicleClaimById(int claimId){
+			return em.find(VehicleClaim.class, claimId);
+		}
+		
+		//updateTravelClaimStatus
+			@Transactional
+			public void updateTravelClaimStatus(TravelClaim tc){
+				em.merge(tc);
+			}
+			public TravelClaim getTravelClaimById(int claimId){
+				return em.find(TravelClaim.class, claimId);
+			}
+
+		
 		//applyMotorClaim
 		@Transactional
 		public void addMotorClaim(VehicleClaim claim) {
 			em.merge(claim);
 		}
+		
+		//addPolicy
+		@Transactional
+		public void addOrUpdatePolicy(Policy policy) {
+			em.merge(policy);
+		}
 
+		//applyTravelClaim
+		@Transactional
+		public void addTravelClaim(TravelClaim claim) {
+			em.merge(claim);
+		}
+			
+		
 	//findCustomerById
 	public Customer findCustomerById(int custId) {
 		return em.find(Customer.class, custId);
 	}
 	
-	//addPolicy
-	@Transactional
-	public void addOrUpdatePolicy(Policy policy) {
-		em.merge(policy);
-	}
-	
-	//applyTravelClaim
-	@Transactional
-	public void addTravelClaim(TravelClaim claim) {
-		em.merge(claim);
-	}
-		
 	//findPolicyById
 	public Policy findPolicyById(int policyId) {
 		return em.find(Policy.class, policyId);
 	}
 	
-	
+	//findVehiclePolicyById
 	public CustomerVehiclePolicy findCustomerVehiclePolicyById(int id) {
 		return em.find(CustomerVehiclePolicy.class, id);
 	}
 	
-	
+	//findTravelPolicyById
 	public CustomerTravelPolicy findCustomerTravelPolicyById(int id) {
 		return em.find(CustomerTravelPolicy.class, id);
 	}
 	
-	
-	
-	//viewMotorClaims
-	@Transactional
-	public List<VehicleClaim> viewMotorClaims(int customerId) {
-		System.out.println(customerId);
-		Customer customer = em.find(Customer.class, customerId);
-		List<CustomerVehiclePolicy> policies = customer.getCustomerVehiclePolicy();
-		List<VehicleClaim> claims = new ArrayList<VehicleClaim>();
-		for(CustomerVehiclePolicy cvp: policies) {
-			claims.add(cvp.getVehicleClaim());
-		}
-		return claims;
+	// Fetch query with queryID
+	public String fetchQueryWithQueryId(int queryId) {
+		ContactUs contactUs = em.find(ContactUs.class, queryId);
+		return contactUs.getQuery();
 	}
 	
-	//viewTravelPolicy
-	@Transactional
-	public List<TravelClaim> viewTravelClaims(int customerId) {
-		Customer customer = em.find(Customer.class, customerId);
-		List<CustomerTravelPolicy> policies = customer.getCustomerTravelPolicy();
-		List<TravelClaim> claims = new ArrayList<TravelClaim>();
-		for(CustomerTravelPolicy ctp: policies) {
-			claims.add(ctp.getTravelClaim());
-		}
-		return claims;
+	//findVehicleById
+	public Vehicle findVehicleById(int vehicleId) {
+		return em.find(Vehicle.class, vehicleId);
 	}
 	
-	
-	//viewPendingMotorClaims
-	public List<VehicleClaim> viewPendingMotorClaims(){        
-        String jpql="select vc from VehicleClaim vc where vc.claimStatus =:status";
-        TypedQuery<VehicleClaim> query=em.createQuery(jpql,VehicleClaim.class);
-        query.setParameter("status", false);
-        return query.getResultList();
-    }
-	
-	//viewPendingTravelClaims
-	public List<TravelClaim> viewPendingTravelClaims(){        
-        String jpql="select tc from TravelClaim tc where tc.claimStatus =:status";
-        TypedQuery<TravelClaim> query=em.createQuery(jpql,TravelClaim.class);
-        query.setParameter("status", false);
-        return query.getResultList();
-    }
+	//findTravelById
+	public Travel findTravelById(int travelId) {
+		return em.find(Travel.class, travelId);
+	}
 
 	
-	//updateVehicleClaimStatus
-	@Transactional
-	public void updateVehicleClaimStatus(VehicleClaim vc, String status){
-		vc.setClaimStatus(ClaimStatus.ACCEPTED);
-		em.merge(vc);
-	}
-	public VehicleClaim getVehicleClaimById(int claimId){
-		return em.find(VehicleClaim.class, claimId);
-	}
 	
-	//updateTravelClaimStatus
-		@Transactional
-		public void updateTravelClaimStatus(TravelClaim tc){
-			em.merge(tc);
-		}
-		public TravelClaim getTravelClaimById(int claimId){
-			return em.find(TravelClaim.class, claimId);
-		}
-
+	
 		
 		
 		
