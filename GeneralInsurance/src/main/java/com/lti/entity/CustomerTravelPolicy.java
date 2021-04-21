@@ -23,6 +23,7 @@ public class CustomerTravelPolicy {
 	LocalDate startDate;
 	LocalDate endDate;
 	double coverageAmount;
+	double premiumAmount;
 	
 	@OneToOne(mappedBy="customertravelpolicy", cascade=CascadeType.ALL)
 	TravelClaim travelClaim;
@@ -87,6 +88,12 @@ public class CustomerTravelPolicy {
 	}
 	public void setTravelClaim(TravelClaim travelClaim) {
 		this.travelClaim = travelClaim;
+	}
+	public double getPremiumAmount() {
+		return premiumAmount;
+	}
+	public void setPremiumAmount(double premiumAmount) {
+		this.premiumAmount = premiumAmount;
 	}
 	
 	

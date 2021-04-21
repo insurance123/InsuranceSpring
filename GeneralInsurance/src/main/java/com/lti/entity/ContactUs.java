@@ -4,11 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="contactus")
+@NamedQuery(name="fetch-all1" , query="select cu from ContactUs as cu")
 public class ContactUs {
 	@Id
 	@SequenceGenerator(name="query_seq", initialValue=8001, allocationSize=1)

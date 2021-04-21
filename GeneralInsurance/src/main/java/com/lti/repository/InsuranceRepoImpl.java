@@ -11,6 +11,10 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lti.dto.CustomerTravelPolicyDto;
+import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.TravelDto;
+import com.lti.dto.VehicleDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ClaimStatus;
 import com.lti.entity.ContactUs;
@@ -35,6 +39,15 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	public void addOrUpdateCustomer(Customer customer) {
 		em.merge(customer);
 	}
+	
+	@Override
+    public boolean isCustomerPresent(String email) {
+         return (Long)
+                    em
+                    .createQuery("select count(c.userId) from Customer c where c.userEmail = :em")
+                    .setParameter("em", email)
+                    .getSingleResult() == 1 ? true : false;
+    }
 	
 	// Register a new Admin
 	@Transactional
@@ -76,25 +89,60 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		
 			//buyMotorInsurance
 			@Transactional
-			public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
-				return em.merge(cvp);
+			public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp) {
+				CustomerVehiclePolicy cp = new CustomerVehiclePolicy();
+				cp.setStartDate(cvp.getStartDate());
+				cp.setEndDate(cvp.getEndDate());
+				cp.setCoverageAmount(cvp.getCoverageAmount());
+				cp.setPremiumAmount(cvp.getPremiumAmount());
+				cp.setCustomer(findCustomerById(cvp.getCustomerId()));
+				cp.setPolicy(findPolicyById(cvp.getPolicyId()));
+				cp.setVehicle(findVehicleById(cvp.getVehicleId()));
+				return em.merge(cp);
 			}
 			
 			//addVehicle
-			@Transactional
-			public Vehicle addVehicle(Vehicle vehicle) {
-				return em.merge(vehicle);
-			}
+			//addVehicle
+            @Transactional
+            public Vehicle addVehicle(VehicleDto vehicleDto) {
+                Vehicle vehicle = new Vehicle();
+                vehicle.setRegistrationNumber(vehicleDto.getRegistrationNumber());
+                vehicle.setRegistrationState(vehicleDto.getRegistrationState());
+                vehicle.setManufacturer(vehicleDto.getManufacturer());
+                vehicle.setModel(vehicleDto.getModel());
+                vehicle.setFuelType(vehicleDto.getFuelType());
+                vehicle.setVehicleType(vehicleDto.getVehicleType());
+                vehicle.setEngineNumber(vehicleDto.getEngineNumber());
+                vehicle.setChassisNumber(vehicleDto.getChassisNumber());
+                vehicle.setCustomer(findCustomerById(vehicleDto.getUserId()));
+                vehicle.setAge(vehicle.getAge());
+                return em.merge(vehicle);
+            }
 		
 			//buyTravelInsurance
 			@Transactional
-			public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
-				return em.merge(ctp);
+			public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicyDto ctp) {
+				CustomerTravelPolicy cp = new CustomerTravelPolicy();
+				cp.setStartDate(ctp.getStartDate());
+				cp.setEndDate(ctp.getEndDate());
+				cp.setCoverageAmount(ctp.getCoverageAmount());
+				cp.setPremiumAmount(ctp.getPremiumAmount());
+				cp.setCustomer(findCustomerById(ctp.getCustomerId()));
+				cp.setPolicy(findPolicyById(ctp.getPolicyId()));
+				cp.setTravel(findTravelById(ctp.getTravelId()));
+				return em.merge(cp);
 			}
 			
 			//addTravel
 			@Transactional
-			public Travel addTravel(Travel travel) {
+			public Travel addTravel(TravelDto travelDto) {
+				Travel travel = new Travel();
+				travel.setStartDate(travelDto.getStartDate());
+				travel.setEndDate(travelDto.getEndDate());
+				travel.setSource(travelDto.getSource());
+				travel.setDestination(travelDto.getDestination());
+				travel.setModeOfTransport(travelDto.getModeOfTransport());
+				travel.setCustomer(findCustomerById(travelDto.getUserId()));
 				return em.merge(travel);
 			}
 	
@@ -117,6 +165,15 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 			em.merge(contactUs);
 
 		}
+		
+		/*
+		 * @Override public boolean isQueryPresent(String userEmail) { return (Long) em
+		 * .createQuery("select count(cu.queryId) from ContactUs cu where cu.userEmail =  :em"
+		 * ) .setParameter("em", userEmail) .getSingleResult() == 1 ? true : false;
+		 * 
+		 * }
+		 */
+		
 		
 		
 		// Fetch all queries in contactsUS table
@@ -267,6 +324,16 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	//findTravelById
 	public Travel findTravelById(int travelId) {
 		return em.find(Travel.class, travelId);
+	}
+
+	@Override
+	public List<Policy> getPolicyFor(String policyFor) {
+		// TODO Auto-generated method stub
+		String jpql = "select p from Policy p where p.policyFor=:pfor";
+		TypedQuery<Policy> query = em.createQuery(jpql,Policy.class);
+		query.setParameter("pfor",policyFor);
+		List<Policy> policy = query.getResultList();
+		return policy;
 	}
 
 	

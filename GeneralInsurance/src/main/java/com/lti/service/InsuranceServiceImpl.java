@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lti.dto.CustomerTravelPolicyDto;
+import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.TravelDto;
+import com.lti.dto.VehicleDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -16,6 +20,7 @@ import com.lti.entity.Travel;
 import com.lti.entity.TravelClaim;
 import com.lti.entity.Vehicle;
 import com.lti.entity.VehicleClaim;
+import com.lti.exception.InsuranceServiceException;
 import com.lti.repository.InsuranceRepo;
 
 
@@ -25,9 +30,20 @@ public class InsuranceServiceImpl implements InsuranceService{
 	@Autowired
 	InsuranceRepo ir;
 	
-	public void addOrUpdateCustomer(Customer customer) {
-		ir.addOrUpdateCustomer(customer);
-	}
+	@Autowired
+	EmailService emailService;
+	
+	@Override
+    public void addOrUpdateCustomer(Customer customer) {
+        if(!ir.isCustomerPresent(customer.getUserEmail())) {
+            ir.addOrUpdateCustomer(customer);
+            String subject="Registration Confirmation";
+            String text="Hi"+customer.getUserName()+"You have succcessfully registered";
+            emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
+        }
+        else
+                throw new InsuranceServiceException("Customer already registred");
+    }
 
 	public void registerAdmin(Admin admin) {
 		ir.registerAdmin(admin);
@@ -46,20 +62,33 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.getAQuote(policyFor);
 	}
 
-	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp) {
-		 return ir.buyMotorInsurance(cvp);
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp) {
+        CustomerVehiclePolicy cp = ir.buyMotorInsurance(cvp);
+        Customer customer = ir.findCustomerById(cvp.getCustomerId());
+        String subject="Insurance Purchased";
+        String text="Hi "+customer.getUserName()+"You have succcessfully purchased the insurance of Rs. " + cvp.getPremiumAmount() + ". Start Date - " + cvp.getStartDate() + ". Expiry Date - " + cvp.getEndDate() + ". Coverage Amount - " + cvp.getCoverageAmount();
+        emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
+ 
+		return cp;
 		
 	}
 	
-	public Vehicle addVehicle(Vehicle vehicle) {
+	
+	public Vehicle addVehicle(VehicleDto vehicle) {
 		return ir.addVehicle(vehicle);
 	}
 
-	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
-		return ir.buyTravelInsurance(ctp);
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicyDto ctp) {
+		CustomerTravelPolicy cp = ir.buyTravelInsurance(ctp);
+        Customer customer = ir.findCustomerById(ctp.getCustomerId());
+        String subject="Insurance Purchased";
+        String text="Hi "+customer.getUserName()+"You have succcessfully purchased the insurance of Rs. " + ctp.getPremiumAmount() + ". Start Date - " + ctp.getStartDate() + ". Expiry Date - " + ctp.getEndDate() + ". Coverage Amount - " + ctp.getCoverageAmount();
+        emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
+ 
+		return cp;
 	}
-	public Travel addTravel(Travel travel) {
-		return ir.addTravel(travel);
+	public Travel addTravel(TravelDto travelDto) {
+		return ir.addTravel(travelDto);
 	}
 
 	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp) {
@@ -71,10 +100,16 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.renewTravelInsurance(ctp);
 	}
 
-	public void addNewQuery(ContactUs contactUs) {
-		ir.addNewQuery(contactUs);
-		
-	}
+	@Override
+    public void addNewQuery(ContactUs contactUs) {
+        
+            ir.addNewQuery(contactUs);
+            String subject="Your query is received";
+            String text="Hi "+contactUs.getUserName()+". We have recieved your query. Our experts will contact you soon!";
+            emailService.sendEmailForNewRegistration(contactUs.getUserEmail(),text,subject);
+       
+        
+    }
 
 	public String fetchQueryWithQueryId(int queryId) {
 		return ir.fetchQueryWithQueryId(queryId);
@@ -164,4 +199,9 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.findTravelById(travelId);
 	}
 
+	@Override
+	public List<Policy> getPolicyFor(String policyFor) {
+		// TODO Auto-generated method stub
+		return ir.getPolicyFor(policyFor);
+	}
 }

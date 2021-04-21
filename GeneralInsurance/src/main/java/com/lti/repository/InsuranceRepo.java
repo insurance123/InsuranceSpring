@@ -2,6 +2,10 @@ package com.lti.repository;
 
 import java.util.List;
 
+import com.lti.dto.CustomerTravelPolicyDto;
+import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.TravelDto;
+import com.lti.dto.VehicleDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -21,10 +25,10 @@ public interface InsuranceRepo {
 	public Customer loginCustomer(String userEmail, String password);
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
-	public Vehicle addVehicle(Vehicle vehicle);
-	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicy cvp);
-	public Travel addTravel(Travel travel);
-	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
+	public Vehicle addVehicle(VehicleDto vehicle);
+	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
+	public Travel addTravel(TravelDto travelDto);
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicyDto ctp);
 	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
 	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);
@@ -49,5 +53,8 @@ public interface InsuranceRepo {
 	public TravelClaim getTravelClaimById(int claimId);
 	public Vehicle findVehicleById(int vehicleId);
 	public Travel findTravelById(int travelId);
+	public List<Policy> getPolicyFor(String policyFor);
+	//public boolean isQueryPresent(String userEmail);
+	boolean isCustomerPresent(String email);
 	
 }

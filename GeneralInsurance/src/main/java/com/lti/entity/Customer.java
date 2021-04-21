@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -21,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="customer_table")
+@NamedQuery(name = "fetch-all", query = "select c from Customer as c")
 public class Customer {
 	@Id
 	@SequenceGenerator(name="customer_seq", initialValue=1001, allocationSize=1)
@@ -32,6 +34,7 @@ public class Customer {
 	String userPhone;
 	@JsonFormat(pattern="yyyy-MM-dd")
 	LocalDate dateOfBirth;
+	String aadharCard;
 	
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	List<Vehicle> vehicle;
@@ -109,4 +112,12 @@ public class Customer {
 	public void setCustomerTravelPolicy(List<CustomerTravelPolicy> customerTravelPolicy) {
 		this.customerTravelPolicy = customerTravelPolicy;
 	}
+	public String getAadharCard() {
+		return aadharCard;
+	}
+	public void setAadharCard(String aadharCard) {
+		this.aadharCard = aadharCard;
+	}
+	
+	
 }

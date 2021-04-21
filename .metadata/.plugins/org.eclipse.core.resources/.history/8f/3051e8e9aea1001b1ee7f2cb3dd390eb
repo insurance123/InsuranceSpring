@@ -1,0 +1,15 @@
+package com.lti.dto;
+
+import java.time.LocalDate;
+
+public class CustomerTravelPolicyDto {
+	
+	int customerTravelPolicyId;
+	LocalDate startDate;
+	LocalDate endDate;
+	double coverageAmount;
+	int userId;
+	int travelId;
+	int policyId;
+
+}
