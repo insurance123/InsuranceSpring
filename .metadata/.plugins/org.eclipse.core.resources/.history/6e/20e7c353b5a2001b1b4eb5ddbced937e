@@ -11,12 +11,14 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
+<<<<<<< HEAD
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
+=======
 import com.lti.dto.CustomerVehiclePolicyDto;
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 import com.lti.entity.Admin;
 import com.lti.entity.ClaimStatus;
 import com.lti.entity.ContactUs;

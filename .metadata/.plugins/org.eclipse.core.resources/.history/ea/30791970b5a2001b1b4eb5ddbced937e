@@ -206,4 +206,8 @@ public class InsuranceServiceImpl implements InsuranceService{
 		// TODO Auto-generated method stub
 		return ir.getPolicyFor(policyFor);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 }

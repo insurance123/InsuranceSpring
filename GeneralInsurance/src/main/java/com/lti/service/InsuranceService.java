@@ -2,10 +2,14 @@ package com.lti.service;
 
 import java.util.List;
 
+<<<<<<< HEAD
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
+=======
+import com.lti.dto.CustomerVehiclePolicyDto;
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
@@ -26,9 +30,15 @@ public interface InsuranceService {
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
 	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
+<<<<<<< HEAD
 	public Vehicle addVehicle(VehicleDto vehicle);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicyDto ctp);
 	public Travel addTravel(TravelDto travelDto);
+=======
+	public Vehicle addVehicle(Vehicle vehicle);
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
+	public Travel addTravel(Travel travel);
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
 	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);

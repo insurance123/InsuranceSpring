@@ -20,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+<<<<<<< HEAD
 import com.lti.dto.AadharCardDto;
 import com.lti.dto.CustomerTravelPolicyDto;
+=======
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.LoginDto;
 import com.lti.dto.LoginStatus;
@@ -151,7 +153,11 @@ public class InsuranceController {
 			
 		}
 	 @PostMapping(value="addVehicle") 
+<<<<<<< HEAD
 		public Vehicle addVehicle(@RequestBody VehicleDto vehicle) {
+=======
+		public Vehicle addVehicle(@RequestBody Vehicle vehicle) {
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 //			vehicle.setCustomer(dao.findCustomerById(userId));
 			return is.addVehicle(vehicle);
 		}

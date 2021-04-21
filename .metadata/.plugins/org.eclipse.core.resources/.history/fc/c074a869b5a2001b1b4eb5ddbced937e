@@ -65,6 +65,7 @@ public class InsuranceServiceImpl implements InsuranceService{
 	}
 
 	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp) {
+<<<<<<< HEAD
         CustomerVehiclePolicy cp = ir.buyMotorInsurance(cvp);
         Customer customer = ir.findCustomerById(cvp.getCustomerId());
         String subject="Insurance Purchased";
@@ -72,7 +73,10 @@ public class InsuranceServiceImpl implements InsuranceService{
         emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
  
 		return cp;
-
+=======
+		 return ir.buyMotorInsurance(cvp);
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
+		
 	}
 	
 	
@@ -206,4 +210,8 @@ public class InsuranceServiceImpl implements InsuranceService{
 		// TODO Auto-generated method stub
 		return ir.getPolicyFor(policyFor);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 }
