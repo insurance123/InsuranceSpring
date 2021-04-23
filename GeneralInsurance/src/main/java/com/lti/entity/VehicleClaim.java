@@ -11,6 +11,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="vehicle_claim")
 public class VehicleClaim {
@@ -19,10 +23,10 @@ public class VehicleClaim {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="vehicleclaim_seq")
 	int claimId;
 	LocalDate claimDate;
-	
 	String reasonOfClaim;
 	String proofOfClaim;
 	ClaimStatus claimStatus;
+	double claimAmount;
 	@OneToOne
 	@JoinColumn(name="customerVehiclePolicyId")
 	CustomerVehiclePolicy customerVehiclePolicy;
@@ -52,17 +56,25 @@ public class VehicleClaim {
 	public void setReasonOfClaim(String reasonOfClaim) {
 		this.reasonOfClaim = reasonOfClaim;
 	}
-	public String getProofOfClaim() {
-		return proofOfClaim;
+	
+	public double getClaimAmount() {
+		return claimAmount;
 	}
-	public void setProofOfClaim(String proofOfClaim) {
-		this.proofOfClaim = proofOfClaim;
+	public void setClaimAmount(double claimAmount) {
+		this.claimAmount = claimAmount;
 	}
+	@JsonIgnore
 	public CustomerVehiclePolicy getCustomerVehiclePolicy() {
 		return customerVehiclePolicy;
 	}
 	public void setCustomerVehiclePolicy(CustomerVehiclePolicy customerVehiclePolicy) {
 		this.customerVehiclePolicy = customerVehiclePolicy;
+	}
+	public String getProofOfClaim() {
+		return proofOfClaim;
+	}
+	public void setProofOfClaim(String proofOfClaim) {
+		this.proofOfClaim = proofOfClaim;
 	}
 	
 	

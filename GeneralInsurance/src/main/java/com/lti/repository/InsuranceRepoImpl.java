@@ -23,6 +23,7 @@ import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
 import com.lti.entity.CustomerTravelPolicy;
 import com.lti.entity.CustomerVehiclePolicy;
+import com.lti.entity.Document;
 import com.lti.entity.Policy;
 import com.lti.entity.Travel;
 import com.lti.entity.TravelClaim;
@@ -240,7 +241,7 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		public List<VehicleClaim> viewPendingMotorClaims(){        
 	        String jpql="select vc from VehicleClaim vc where vc.claimStatus =:status";
 	        TypedQuery<VehicleClaim> query=em.createQuery(jpql,VehicleClaim.class);
-	        query.setParameter("status", false);
+	        query.setParameter("status", ClaimStatus.PENDING);
 	        return query.getResultList();
 	    }
 		
@@ -248,26 +249,30 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		public List<TravelClaim> viewPendingTravelClaims(){        
 	        String jpql="select tc from TravelClaim tc where tc.claimStatus =:status";
 	        TypedQuery<TravelClaim> query=em.createQuery(jpql,TravelClaim.class);
-	        query.setParameter("status", false);
+	        query.setParameter("status", ClaimStatus.PENDING);
 	        return query.getResultList();
 	    }
 
 		
 		//updateVehicleClaimStatus
 		@Transactional
-		public void updateVehicleClaimStatus(VehicleClaim vc, String status){
-			vc.setClaimStatus(ClaimStatus.ACCEPTED);
-			em.merge(vc);
+		public VehicleClaim updateVehicleClaimStatus(VehicleClaim vc){
+			//vc.setClaimStatus(ClaimStatus.ACCEPTED);
+			 return em.merge(vc);
 		}
+		
+		//updateTravelClaimStatus
+		@Transactional
+		public TravelClaim updateTravelClaimStatus(TravelClaim tc){
+			return em.merge(tc);
+		}
+		
+		
 		public VehicleClaim getVehicleClaimById(int claimId){
 			return em.find(VehicleClaim.class, claimId);
 		}
 		
-		//updateTravelClaimStatus
-			@Transactional
-			public void updateTravelClaimStatus(TravelClaim tc){
-				em.merge(tc);
-			}
+		
 			public TravelClaim getTravelClaimById(int claimId){
 				return em.find(TravelClaim.class, claimId);
 			}
@@ -275,8 +280,10 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		
 		//applyMotorClaim
 		@Transactional
-		public void addMotorClaim(VehicleClaim claim) {
+		public VehicleClaim addMotorClaim(VehicleClaim claim) {
+			claim.setClaimStatus(ClaimStatus.PENDING);
 			em.merge(claim);
+			return claim;
 		}
 		
 		//addPolicy
@@ -287,8 +294,10 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 
 		//applyTravelClaim
 		@Transactional
-		public void addTravelClaim(TravelClaim claim) {
+		public TravelClaim addTravelClaim(TravelClaim claim) {
+			claim.setClaimStatus(ClaimStatus.PENDING);
 			em.merge(claim);
+			return claim;
 		}
 			
 		
@@ -334,6 +343,39 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		String jpql = "select p from Policy p where p.policyFor=:pfor";
 		TypedQuery<Policy> query = em.createQuery(jpql,Policy.class);
 		query.setParameter("pfor",policyFor);
+		List<Policy> policy = query.getResultList();
+		return policy;
+	}
+
+	@Override
+	public Vehicle addVehicle(Vehicle vehicle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Travel addTravel(Travel travel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@Transactional
+	public Document addRc(Document document) {
+		// TODO Auto-generated method stub
+		return em.merge(document);
+	}
+
+	@Override
+	public List<Policy> viewAllPolicies() {
+		String jpql = "select p from Policy p";
+		TypedQuery<Policy> query = em.createQuery(jpql,Policy.class);
 		List<Policy> policy = query.getResultList();
 		return policy;
 	}

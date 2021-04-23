@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="travel_claim")
 public class TravelClaim {
@@ -22,6 +24,7 @@ public class TravelClaim {
 	ClaimStatus claimStatus;
 	String reasonOfClaim;
 	String proofOfClaim;
+	double claimAmount;
 	
 	@OneToOne
 	@JoinColumn(name="customerTravelPolicyId")
@@ -58,6 +61,15 @@ public class TravelClaim {
 	public void setProofOfClaim(String proofOfClaim) {
 		this.proofOfClaim = proofOfClaim;
 	}
+	
+	
+	public double getClaimAmount() {
+		return claimAmount;
+	}
+	public void setClaimAmount(double claimAmount) {
+		this.claimAmount = claimAmount;
+	}
+	@JsonIgnore
 	public CustomerTravelPolicy getCustomerTravelPolicy() {
 		return customertravelpolicy;
 	}

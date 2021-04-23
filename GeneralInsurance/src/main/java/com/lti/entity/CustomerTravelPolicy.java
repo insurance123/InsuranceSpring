@@ -13,6 +13,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="customertravelpolicy")
 public class CustomerTravelPolicy {
@@ -83,6 +85,7 @@ public class CustomerTravelPolicy {
 	public void setTravel(Travel travel) {
 		this.travel = travel;
 	}
+	@JsonIgnore
 	public TravelClaim getTravelClaim() {
 		return travelClaim;
 	}

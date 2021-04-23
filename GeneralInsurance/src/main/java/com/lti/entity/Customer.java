@@ -48,6 +48,9 @@ public class Customer {
 	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
 	List<CustomerTravelPolicy> customerTravelPolicy;
 	
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+	List<Document> document;
+	
 	public int getUserId() {
 		return userId;
 	}

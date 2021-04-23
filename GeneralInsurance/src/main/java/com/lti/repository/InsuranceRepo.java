@@ -2,19 +2,19 @@ package com.lti.repository;
 
 import java.util.List;
 
-<<<<<<< HEAD
+
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
-=======
+
 import com.lti.dto.CustomerVehiclePolicyDto;
->>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 import com.lti.entity.Admin;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
 import com.lti.entity.CustomerTravelPolicy;
 import com.lti.entity.CustomerVehiclePolicy;
+import com.lti.entity.Document;
 import com.lti.entity.Policy;
 import com.lti.entity.Travel;
 import com.lti.entity.TravelClaim;
@@ -29,17 +29,13 @@ public interface InsuranceRepo {
 	public Customer loginCustomer(String userEmail, String password);
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
-<<<<<<< HEAD
 	public Vehicle addVehicle(VehicleDto vehicle);
 	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
 	public Travel addTravel(TravelDto travelDto);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicyDto ctp);
-=======
 	public Vehicle addVehicle(Vehicle vehicle);
-	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
 	public Travel addTravel(Travel travel);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
->>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
 	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
 	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);
@@ -47,10 +43,10 @@ public interface InsuranceRepo {
 	public List<ContactUs> viewAllQueries();
 	public List<CustomerVehiclePolicy> ViewUserMotorPolicies(int customerId);
 	public List<CustomerTravelPolicy> viewUserTravelPolicies(int customerId);
-	public void addMotorClaim(VehicleClaim claim);
+	public VehicleClaim addMotorClaim(VehicleClaim claim);
 	public Customer findCustomerById(int custId);
 	public void addOrUpdatePolicy(Policy policy);
-	public void addTravelClaim(TravelClaim claim);
+	public TravelClaim addTravelClaim(TravelClaim claim);
 	public Policy findPolicyById(int policyId);
 	public CustomerVehiclePolicy findCustomerVehiclePolicyById(int id);
 	public CustomerTravelPolicy findCustomerTravelPolicyById(int id);
@@ -58,17 +54,16 @@ public interface InsuranceRepo {
 	public List<TravelClaim> viewTravelClaims(int customerId);
 	public List<VehicleClaim> viewPendingMotorClaims();
 	public List<TravelClaim> viewPendingTravelClaims();
-	public void updateVehicleClaimStatus(VehicleClaim vc, String status);
+	public VehicleClaim updateVehicleClaimStatus(VehicleClaim vc);
 	public VehicleClaim getVehicleClaimById(int claimId);
-	public void updateTravelClaimStatus(TravelClaim tc);
+	public TravelClaim updateTravelClaimStatus(TravelClaim tc);
 	public TravelClaim getTravelClaimById(int claimId);
 	public Vehicle findVehicleById(int vehicleId);
 	public Travel findTravelById(int travelId);
 	public List<Policy> getPolicyFor(String policyFor);
-<<<<<<< HEAD
 	//public boolean isQueryPresent(String userEmail);
 	boolean isCustomerPresent(String email);
-=======
->>>>>>> dee70d97b5b1b7360e06fbacbfd028af99f5ad57
+	public Document addRc(Document document);
+	public List<Policy> viewAllPolicies();
 	
 }

@@ -13,6 +13,7 @@ import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.entity.Admin;
+import com.lti.entity.ClaimStatus;
 import com.lti.entity.ContactUs;
 import com.lti.entity.Customer;
 import com.lti.entity.CustomerTravelPolicy;
@@ -46,7 +47,9 @@ public class InsuranceServiceImpl implements InsuranceService{
         else
                 throw new InsuranceServiceException("Customer already registred");
     }
-
+	public void addOrUpdateOldCustomer(Customer customer) {
+        ir.addOrUpdateCustomer(customer);
+    }
 	public void registerAdmin(Admin admin) {
 		ir.registerAdmin(admin);
 		
@@ -129,8 +132,8 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.viewUserTravelPolicies(customerId);
 	}
 
-	public void addMotorClaim(VehicleClaim claim) {
-		ir.addMotorClaim(claim);
+	public VehicleClaim addMotorClaim(VehicleClaim claim) {
+		return ir.addMotorClaim(claim);
 	}
 
 	public Customer findCustomerById(int custId) {
@@ -142,8 +145,8 @@ public class InsuranceServiceImpl implements InsuranceService{
 		
 	}
 
-	public void addTravelClaim(TravelClaim claim) {
-		ir.addTravelClaim(claim);
+	public TravelClaim addTravelClaim(TravelClaim claim) {
+		return ir.addTravelClaim(claim);
 		
 	}
 
@@ -175,19 +178,48 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.viewPendingTravelClaims();
 	}
 
-	public void updateVehicleClaimStatus(VehicleClaim vc, String status) {
-		ir.updateVehicleClaimStatus(vc, status);
+	public void updateVehicleClaimStatus(VehicleClaim vc) {
+		Customer customer = vc.getCustomerVehiclePolicy().getCustomer();
+		
+		VehicleClaim claim = ir.updateVehicleClaimStatus(vc);
+		String text = "";
+		String subject = "";
+		if(claim.getClaimStatus() == ClaimStatus.ACCEPTED) {
+			subject="Your Claim has been Accepted!";
+	        text="Hi "+customer.getUserName()+" Your Claim Id "+claim.getClaimId()+" has been approved!";
+		}
+		else {
+			subject="Your Claim has been Rejected!";
+	        text="Hi "+customer.getUserName()+" Your Claim Id "+claim.getClaimId()+" has been rejected!";
+		}
+        emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
 		
 	}
 
+	
+	public void updateTravelClaimStatus(TravelClaim tc) {
+		Customer customer = tc.getCustomerTravelPolicy().getCustomer();
+		TravelClaim claim = ir.updateTravelClaimStatus(tc);
+		String text = "";
+		String subject = "";
+		if(claim.getClaimStatus() == ClaimStatus.ACCEPTED) {
+			subject="Your Claim has been Accepted!";
+	        text="Hi "+customer.getUserName()+" Your Claim Id "+claim.getClaimId()+" has been approved!";
+		}
+		else {
+			subject="Your Claim has been Rejected!";
+	        text="Hi "+customer.getUserName()+" Your Claim Id "+claim.getClaimId()+" has been rejected!";
+		}
+        emailService.sendEmailForNewRegistration(customer.getUserEmail(),text,subject);
+		
+		
+	}
+	
 	public VehicleClaim getVehicleClaimById(int claimId) {
 		return ir.getVehicleClaimById(claimId);
 	}
 
-	public void updateTravelClaimStatus(TravelClaim tc) {
-		ir.updateTravelClaimStatus(tc);
-		
-	}
+	
 
 	public TravelClaim getTravelClaimById(int claimId) {
 		return ir.getTravelClaimById(claimId);
@@ -206,4 +238,29 @@ public class InsuranceServiceImpl implements InsuranceService{
 		// TODO Auto-generated method stub
 		return ir.getPolicyFor(policyFor);
 	}
+
+	@Override
+	public Vehicle addVehicle(Vehicle vehicle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Travel addTravel(Travel travel) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Policy> viewAllPolicies() {
+		// TODO Auto-generated method stub
+		return ir.viewAllPolicies();
+	}
+
 }

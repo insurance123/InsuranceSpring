@@ -95,6 +95,7 @@ public class CustomerVehiclePolicy {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
+	@JsonIgnore
 	public VehicleClaim getVehicleClaim() {
 		return vehicleClaim;
 	}

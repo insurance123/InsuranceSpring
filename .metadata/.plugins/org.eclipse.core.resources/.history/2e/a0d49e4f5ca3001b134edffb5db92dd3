@@ -1,0 +1,16 @@
+package com.lti.dto;
+
+import java.time.LocalDate;
+
+import com.lti.entity.ClaimStatus;
+
+public class ViewVehicleClaimDto {
+	int claimId;
+	LocalDate claimDate;
+	String reasonOfClaim;
+	String proofOfClaim;
+	ClaimStatus claimStatus;
+	double claimAmount;
+	int policyId;
+
+}
