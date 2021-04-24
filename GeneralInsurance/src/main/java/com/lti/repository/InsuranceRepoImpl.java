@@ -2,6 +2,7 @@ package com.lti.repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.LoginStatus;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
@@ -59,14 +61,25 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	}
 		
 // Check customer login creds
-		public Customer loginCustomer(String userEmail, String password) {
+		public LoginStatus loginCustomer(String userEmail, String password) {
 			String jpql = "select c from Customer c where c.userEmail=:uEmail AND c.password=:pass";
 			Query query = em.createQuery(jpql);
 			query.setParameter("uEmail", userEmail);
 			query.setParameter("pass", password);
-			Customer customer = (Customer) query.getSingleResult();
-
-			return customer;
+			LoginStatus lstatus = new LoginStatus();
+			try {
+					Customer customer = (Customer) query.getSingleResult();
+					lstatus.setUserId(customer.getUserId());
+					lstatus.setUserEmail(customer.getUserEmail());
+					lstatus.setUserName(customer.getUserName());
+					lstatus.setUserStatus("Success");
+					return lstatus;
+			}
+			
+			catch (Exception e) {
+				lstatus.setUserStatus("Failed");
+				return lstatus;
+			}
 		}
 		
 		// Admin login creds
@@ -214,25 +227,34 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		//viewMotorClaims
 		@Transactional
 		public List<VehicleClaim> viewMotorClaims(int customerId) {
-			System.out.println(customerId);
-			Customer customer = em.find(Customer.class, customerId);
-			List<CustomerVehiclePolicy> policies = customer.getCustomerVehiclePolicy();
-			List<VehicleClaim> claims = new ArrayList<VehicleClaim>();
-			for(CustomerVehiclePolicy cvp: policies) {
-				claims.add(cvp.getVehicleClaim());
-			}
+			//System.out.println(customerId);
+			String jpql = "select vc from VehicleClaim vc where vc.customerVehiclePolicy.customer.userId=:custId";
+			TypedQuery<VehicleClaim> query = em.createQuery(jpql, VehicleClaim.class);
+			query.setParameter("custId", customerId);
+			List<VehicleClaim> claims = query.getResultList();
+			/*
+			 * Customer customer = em.find(Customer.class, customerId);
+			 * List<CustomerVehiclePolicy> policies = customer.getCustomerVehiclePolicy();
+			 * List<VehicleClaim> claims = new ArrayList<VehicleClaim>();
+			 * for(CustomerVehiclePolicy cvp: policies) { claims.add(cvp.getVehicleClaim());
+			 * }
+			 */
 			return claims;
 		}
 		
 		//viewTravelPolicy
 		@Transactional
 		public List<TravelClaim> viewTravelClaims(int customerId) {
-			Customer customer = em.find(Customer.class, customerId);
-			List<CustomerTravelPolicy> policies = customer.getCustomerTravelPolicy();
-			List<TravelClaim> claims = new ArrayList<TravelClaim>();
-			for(CustomerTravelPolicy ctp: policies) {
-				claims.add(ctp.getTravelClaim());
-			}
+			String jpql = "select tc from TravelClaim tc where tc.customertravelpolicy.customer.userId=:custId";
+			TypedQuery<TravelClaim> query = em.createQuery(jpql, TravelClaim.class);
+			query.setParameter("custId", customerId);
+			List<TravelClaim> claims = query.getResultList();
+			/*
+			 * Customer customer = em.find(Customer.class, customerId);
+			 * List<CustomerTravelPolicy> policies = customer.getCustomerTravelPolicy();
+			 * List<TravelClaim> claims = new ArrayList<TravelClaim>();
+			 * for(CustomerTravelPolicy ctp: policies) { claims.add(ctp.getTravelClaim()); }
+			 */
 			return claims;
 		}
 		
@@ -380,12 +402,38 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		return policy;
 	}
 
+	//forgot password:
+	@Override
+    public Customer findCustomerByEmail(String userEmail) {
+        String jpql = "select c from Customer c where c.userEmail=:uEmail";
+        Query query = em.createQuery(jpql);
+        query.setParameter("uEmail", userEmail);
+        Customer cust = (Customer) query.getSingleResult();
+        return cust;
+    }
 	
 	
-	
+	 @Transactional
+	    public String updateCustomerPassword(String password, String userEmail) {
+	        String jpql = "update Customer c set c.password=:up where c.userEmail=:uid";
+	        Query query = em.createQuery(jpql);
+	        query.setParameter("up", password);
+	        query.setParameter("uid", userEmail);
+	        int updatedRows = query.executeUpdate();
+	        if (updatedRows > 0)
+	            return "updated";
+	        
+	        return "failed";
+	    }
 		
-		
-		
+	 @Override
+	    public int Generateotp() {
+	        Random rand = new Random(); // instance of random class
+	        int upperbound = 100000;
+	        // generate random values from 0-24
+	        int int_random = rand.nextInt(upperbound);
+	        return int_random;
+	    }
 		
 		
 		

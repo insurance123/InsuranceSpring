@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.LoginStatus;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
 
@@ -26,7 +27,7 @@ import com.lti.entity.VehicleClaim;
 public interface InsuranceRepo {
 	public void addOrUpdateCustomer(Customer customer);
 	public void registerAdmin(Admin admin);
-	public Customer loginCustomer(String userEmail, String password);
+	public LoginStatus loginCustomer(String userEmail, String password);
 	public Admin loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
 	public Vehicle addVehicle(VehicleDto vehicle);
@@ -65,5 +66,8 @@ public interface InsuranceRepo {
 	boolean isCustomerPresent(String email);
 	public Document addRc(Document document);
 	public List<Policy> viewAllPolicies();
-	
+	//forgot password
+	Customer findCustomerByEmail(String userEmail);
+	String updateCustomerPassword(String password,String userEmail);
+	public int Generateotp();
 }

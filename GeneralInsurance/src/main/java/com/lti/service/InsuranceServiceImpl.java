@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lti.dto.CustomerTravelPolicyDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
+import com.lti.dto.LoginStatus;
 import com.lti.dto.TravelDto;
 import com.lti.dto.VehicleDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
@@ -55,7 +56,7 @@ public class InsuranceServiceImpl implements InsuranceService{
 		
 	}
 
-	public Customer loginCustomer(String userEmail, String password) {
+	public LoginStatus loginCustomer(String userEmail, String password) {
 		return ir.loginCustomer(userEmail, password);
 	}
 
@@ -262,5 +263,26 @@ public class InsuranceServiceImpl implements InsuranceService{
 		// TODO Auto-generated method stub
 		return ir.viewAllPolicies();
 	}
+	
+	//forgot password:
+	@Override
+    public Customer findCustomerByEmail(String userEmail) {
+        return ir.findCustomerByEmail(userEmail);
+    }
+	
+	@Override
+    public String updateCustomerPassword(String password, String userEmail) {
+        return ir.updateCustomerPassword(password, userEmail);
+    }
+
+	public int Generateotp(String userEmail) {
+        Customer c=ir.findCustomerByEmail(userEmail);
+        int otp =ir.Generateotp();
+        String subject="OTP";
+        String text="Hi "+" "+ c.getUserName()+" this is your generated otp "+otp;
+        emailService.sendEmailForNewRegistration(c.getUserEmail(),text,subject);
+        System.out.println("Mail sent");
+        return otp;
+    }
 
 }

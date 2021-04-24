@@ -3,6 +3,7 @@ package com.lti.resource;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.NoResultException;
@@ -40,6 +41,7 @@ import com.lti.dto.UpdateStatusDto;
 import com.lti.dto.UserDetailsDto;
 import com.lti.dto.VehicleClaimDto;
 import com.lti.dto.VehicleDto;
+import com.lti.dto.ViewTravelClaimDto;
 import com.lti.dto.ViewVehicleClaimDto;
 import com.lti.entity.Admin;
 import com.lti.entity.ClaimStatus;
@@ -109,7 +111,7 @@ public class InsuranceController {
 	 @PostMapping("/aadhar-upload")
 //		public RegisterStatus upload(AadharCardDto aadharCardDto) {​​​​​​​
 		public RegisterStatus upload(AadharCardDto aadharCardDto) {
-				String imageUploadLocation = "d:/uploads/";
+				String imageUploadLocation = "C:/Users/ADMIN/Documents/general/src/assets/uploads/";
 		        String fileName = aadharCardDto.getAadharCard().getOriginalFilename();
 		        String targetFile = imageUploadLocation + fileName;
 		        try {
@@ -152,7 +154,7 @@ public class InsuranceController {
 	 }
 	
 	 @PostMapping(value = "/logincustomer")
-	   public Customer loginCustomer(@RequestBody LoginDto loginData, HttpSession session) {
+	   public LoginStatus loginCustomer(@RequestBody LoginDto loginData, HttpSession session) {
 		 return is.loginCustomer(loginData.getUserEmail(), loginData.getPassword());
 	 }
 //	 public LoginStatus loginCustomer(@RequestBody LoginDto loginData) {
@@ -351,6 +353,10 @@ public class InsuranceController {
 	}
 	@GetMapping(value="/viewMotorClaims")
     public List<VehicleClaim> viewMotorClaims(@RequestParam("userId") int customerId) {
+		List<VehicleClaim> claim = is.viewMotorClaims(customerId);
+		for(VehicleClaim vc: claim ) {
+			System.out.println(vc.getClaimId());
+		}
         return is.viewMotorClaims(customerId);
     }
 
@@ -360,17 +366,43 @@ public class InsuranceController {
     }
 
 	@GetMapping(value="/viewpendingmotorclaims")
-    public List<VehicleClaim> viewPendingMotorClaims() {
+    public List<ViewVehicleClaimDto> viewPendingMotorClaims() {
+		List<ViewVehicleClaimDto> claims = new ArrayList<>();
         List<VehicleClaim> vehicleclaims = is.viewPendingMotorClaims();
-        return vehicleclaims;
+        for(VehicleClaim claim: vehicleclaims) {
+        	ViewVehicleClaimDto temp = new ViewVehicleClaimDto();
+        	temp.setClaimId(claim.getClaimId());
+        	temp.setClaimAmount(claim.getClaimAmount());
+        	temp.setClaimStatus(claim.getClaimStatus());
+        	temp.setClaimDate(claim.getClaimDate());
+        	temp.setProofOfClaim(claim.getProofOfClaim());
+        	temp.setReasonOfClaim(claim.getReasonOfClaim());
+        	temp.setCustomerVehiclePolicyId(claim.getCustomerVehiclePolicy().getCustomerVehiclePolicyId());
+        	claims.add(temp);
+        	//System.out.println(temp);
+        }
+        return claims;
     }
 
  
 
     @GetMapping(value="/viewpendingtravelclaims")
-    public List<TravelClaim> viewPendingTravelClaims() {
+    public List<ViewTravelClaimDto> viewPendingTravelClaims() {
+    	List<ViewTravelClaimDto> claims = new ArrayList<>();
         List<TravelClaim> travelclaims =is.viewPendingTravelClaims();
-        return travelclaims;
+        for(TravelClaim claim: travelclaims) {
+        	ViewTravelClaimDto temp = new ViewTravelClaimDto();
+        	temp.setClaimId(claim.getClaimId());
+        	temp.setClaimAmount(claim.getClaimAmount());
+        	temp.setClaimStatus(claim.getClaimStatus());
+        	temp.setClaimDate(claim.getClaimDate());
+        	temp.setProofOfClaim(claim.getProofOfClaim());
+        	temp.setReasonOfClaim(claim.getReasonOfClaim());
+        	temp.setCustomerTravelPolicyId(claim.getCustomerTravelPolicy().getCustomerTravelPolicyId());
+        	claims.add(temp);
+        	//System.out.println(temp);
+        }
+        return claims;
     }
     
 	@PutMapping(value="/updateStatus")
@@ -419,5 +451,23 @@ public class InsuranceController {
 	public List<Policy> viewAllPolicies() {
 		return is.viewAllPolicies();
 	}
+	
+	//forgot password:
+	@PutMapping(value = "/updatecustomerpassword")
+    public String updateCustomerPassword(@RequestBody LoginDto logindto) {
+        System.out.println(logindto.getUserEmail() +logindto.getPassword());
+        return is.updateCustomerPassword(logindto.getPassword(), logindto.getUserEmail());
+    }
 
+    @RequestMapping(value = "/findcustomerbyemail", method = RequestMethod.GET)
+    public Customer findCustomerByEmail(@RequestParam("userEmail") String userEmail) {
+        Customer cust = is.findCustomerByEmail(userEmail);
+        return cust;
+    }
+
+    @GetMapping(value = "/forgotpassword")
+    public int Generateotp(@RequestParam("userEmail") String userEmail) {
+
+        return is.Generateotp(userEmail);
+    }
 }

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="com.lti.service.InsuranceService"/>
-    <fullyQualifiedTypeName name="javax.persistence.Table"/>
-    <fullyQualifiedTypeName name="org.springframework.context.annotation.ComponentScan"/>
-    <fullyQualifiedTypeName name="com.lti.dto.LoginDto"/>
-    <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
     <fullyQualifiedTypeName name="com.lti.repository.InsuranceRepo"/>
     <fullyQualifiedTypeName name="java.lang.RuntimeException"/>
     <fullyQualifiedTypeName name="com.lti.dto.AadharCardDto"/>
@@ -17,7 +12,6 @@
     <fullyQualifiedTypeName name="org.springframework.mail.SimpleMailMessage"/>
     <fullyQualifiedTypeName name="com.lti.entity.CustomerTravelPolicy"/>
     <fullyQualifiedTypeName name="com.lti.dto.CustomerTravelPolicyDto"/>
-    <fullyQualifiedTypeName name="com.lti.dto.LoginStatus"/>
     <fullyQualifiedTypeName name="com.lti.dto.Status.StatusType"/>
     <fullyQualifiedTypeName name="javax.persistence.NoResultException"/>
     <fullyQualifiedTypeName name="com.lti.dto.Status.LoginStatusType"/>
@@ -43,21 +37,27 @@
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ModelAttribute"/>
     <fullyQualifiedTypeName name="com.lti.dto.VehicleClaimDto"/>
     <fullyQualifiedTypeName name="com.lti.dto.PolicyDto"/>
-    <fullyQualifiedTypeName name="com.lti.dto.ViewVehicleClaimDto"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PostMapping"/>
     <fullyQualifiedTypeName name="com.lti.dto.TravelClaimDto"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PutMapping"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.RequestBody"/>
     <fullyQualifiedTypeName name="com.lti.dto.UpdateStatusDto"/>
-    <fullyQualifiedTypeName name="com.lti.entity.ClaimStatus"/>
     <fullyQualifiedTypeName name="com.lti.entity.Customer"/>
     <fullyQualifiedTypeName name="com.lti.dto.UserDetailsDto"/>
     <fullyQualifiedTypeName name="java.time.LocalDate"/>
-    <fullyQualifiedTypeName name="com.lti.entity.VehicleClaim"/>
-    <fullyQualifiedTypeName name="com.lti.entity.TravelClaim"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonFormat"/>
     <fullyQualifiedTypeName name="com.sun.mail.handlers.multipart_mixed"/>
     <fullyQualifiedTypeName name="org.springframework.web.multipart.MultipartFile"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="com.lti.dto.LoginStatus"/>
+    <fullyQualifiedTypeName name="com.lti.entity.TravelClaim"/>
+    <fullyQualifiedTypeName name="com.lti.dto.ViewTravelClaimDto"/>
+    <fullyQualifiedTypeName name="com.lti.entity.ClaimStatus"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="com.lti.dto.ViewVehicleClaimDto"/>
+    <fullyQualifiedTypeName name="javax.persistence.TypedQuery"/>
+    <fullyQualifiedTypeName name="com.lti.entity.VehicleClaim"/>
+    <fullyQualifiedTypeName name="java.util.List"/>
+    <fullyQualifiedTypeName name="java.util.Random"/>
 </qualifiedTypeNameHistroy>

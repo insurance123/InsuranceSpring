@@ -11,7 +11,7 @@ public class ViewVehicleClaimDto {
 	String proofOfClaim;
 	ClaimStatus claimStatus;
 	double claimAmount;
-	int policyId;
+	int customerVehiclePolicyId;
 	public int getClaimId() {
 		return claimId;
 	}
@@ -48,12 +48,13 @@ public class ViewVehicleClaimDto {
 	public void setClaimAmount(double claimAmount) {
 		this.claimAmount = claimAmount;
 	}
-	public int getPolicyId() {
-		return policyId;
+	public int getCustomerVehiclePolicyId() {
+		return customerVehiclePolicyId;
 	}
-	public void setPolicyId(int policyId) {
-		this.policyId = policyId;
+	public void setCustomerVehiclePolicyId(int customerVehiclePolicyId) {
+		this.customerVehiclePolicyId = customerVehiclePolicyId;
 	}
+	
 	
 	
 
