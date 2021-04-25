@@ -31,6 +31,7 @@ public class Policy {
 	@OneToMany(mappedBy="policy", cascade=CascadeType.ALL)
 	List<CustomerTravelPolicy> customerTravelPolicy;
 	
+	
 	public int getPolicyId() {
 		return policyId;
 	}

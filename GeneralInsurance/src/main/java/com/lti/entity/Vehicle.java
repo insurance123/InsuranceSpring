@@ -42,6 +42,7 @@ public class Vehicle {
 	List<CustomerVehiclePolicy> customerVehiclePolicy;
 	
 	
+	
 	public int getVehicleId() {
 		return vehicleId;
 	}

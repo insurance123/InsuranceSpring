@@ -38,7 +38,7 @@ public interface InsuranceService {
 	public Vehicle addVehicle(Vehicle vehicle);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
 	public Travel addTravel(Travel travel);
-	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
+	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy oldCvp, CustomerVehiclePolicy newCvp);
 	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);
 	public String fetchQueryWithQueryId(int queryId);

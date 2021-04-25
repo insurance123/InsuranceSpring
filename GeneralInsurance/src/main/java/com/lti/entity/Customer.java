@@ -51,6 +51,7 @@ public class Customer {
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	List<Document> document;
 	
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -121,6 +122,14 @@ public class Customer {
 	public void setAadharCard(String aadharCard) {
 		this.aadharCard = aadharCard;
 	}
+	@JsonIgnore
+	public List<Document> getDocument() {
+		return document;
+	}
+	public void setDocument(List<Document> document) {
+		this.document = document;
+	}
+	
 	
 	
 }

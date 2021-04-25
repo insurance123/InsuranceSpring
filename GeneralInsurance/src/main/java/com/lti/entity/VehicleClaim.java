@@ -31,6 +31,7 @@ public class VehicleClaim {
 	@JoinColumn(name="customerVehiclePolicyId")
 	CustomerVehiclePolicy customerVehiclePolicy;
 	
+	
 	public int getClaimId() {
 		return claimId;
 	}
@@ -76,6 +77,7 @@ public class VehicleClaim {
 	public void setProofOfClaim(String proofOfClaim) {
 		this.proofOfClaim = proofOfClaim;
 	}
+	
 	
 	
 }

@@ -97,8 +97,8 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.addTravel(travelDto);
 	}
 
-	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp) {
-		 return ir.renewMotorInsurance(cvp);
+	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy oldCvp, CustomerVehiclePolicy newCvp) {
+		 return ir.renewMotorInsurance(oldCvp, newCvp);
 		
 	}
 

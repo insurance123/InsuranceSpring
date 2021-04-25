@@ -89,13 +89,14 @@ public class CustomerVehiclePolicy {
 	public void setPolicy(Policy policy) {
 		this.policy = policy;
 	}
+	@JsonIgnore
 	public Vehicle getVehicle() {
 		return vehicle;
 	}
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	@JsonIgnore
+	
 	public VehicleClaim getVehicleClaim() {
 		return vehicleClaim;
 	}

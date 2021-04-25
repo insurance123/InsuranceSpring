@@ -38,7 +38,11 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	@PersistenceContext
 	EntityManager em;
 	
+	@PersistenceContext
+	EntityManager em1;
 
+	@PersistenceContext
+	EntityManager em2;
 	//addCustomer
 	@Transactional
 	public void addOrUpdateCustomer(Customer customer) {
@@ -175,11 +179,32 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	
 		//renewMotorInsurance
 		@Transactional
-		public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp){
-			return em.merge(cvp);
+		public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy oldCvp, CustomerVehiclePolicy newCvp){
+			try {
+				VehicleClaim vc  = oldCvp.getVehicleClaim();
+				removeVehicleClaim(vc);
+				//em1.detach(vc);
+			}
+			catch (Exception e) {
+				
+			}
+//			policies.setCustomerVehiclePolicyId(oldCvp.getCustomerVehiclePolicyId());
+//			policies.setEndDate(oldCvp.getEndDate());
+//			policies.setPremiumAmount(oldCvp.getPremiumAmount());
+//			policies.setCoverageAmount(oldCvp.getCoverageAmount());
+//			policies.setStartDate(oldCvp.getStartDate());
+//			policies.setCustomer(oldCvp.getCustomer());
+//			policies.setVehicle(oldCvp.getVehicle());
+//			policies.setPolicy(oldCvp.getPolicy());
+//			em.merge(policies);
+			//em2.detach(oldCvp);
+			removeVehiclePolicy(oldCvp);
+			return em.merge(newCvp);
 			
 			
 		}
+		
+		
 		
 		//renewTravelInsurance
 		@Transactional
@@ -460,6 +485,33 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		TypedQuery<TravelClaim> query = em.createQuery(jpql,TravelClaim.class);
 		List<TravelClaim> tc = query.getResultList();
 		return tc;
+	}
+
+	@Override
+	@Transactional
+	public void removeVehiclePolicy(CustomerVehiclePolicy cvp) {
+		// TODO Auto-generated method stub
+		int id = cvp.getCustomerVehiclePolicyId();
+		String jpql = "delete from CustomerVehiclePolicy c where c.customerVehiclePolicyId=:cvpId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("cvpId", id);
+		int rec = query.executeUpdate();
+		System.out.println(rec);
+		//em.detach(cvp);
+		
+	}
+
+	@Override
+	@Transactional
+	public void removeVehicleClaim(VehicleClaim vc) {
+		// TODO Auto-generated method stub
+		int id = vc.getClaimId();
+		String jpql = "delete from VehicleClaim v where v.claimId=:vId";
+		Query query = em.createQuery(jpql);
+		query.setParameter("vId", id);
+		int rec = query.executeUpdate();
+		System.out.println(rec);
+		//em.detach(vc);
 	}
 		
 		

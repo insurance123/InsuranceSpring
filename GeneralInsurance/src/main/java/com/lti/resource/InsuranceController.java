@@ -215,7 +215,7 @@ public class InsuranceController {
             newCvp.setVehicle(oldCvp.getVehicle());
             newCvp.setCustomer(oldCvp.getCustomer());
             newCvp.setPolicy(oldCvp.getPolicy());
-            return is.renewMotorInsurance(newCvp);
+            return is.renewMotorInsurance(oldCvp,newCvp);
            
         }
 
@@ -254,13 +254,15 @@ public class InsuranceController {
 	
 	@GetMapping(value="/getVehiclePolicies")
 	public List<CustomerVehiclePolicy> ViewUserMotorPolicies(@RequestBody @RequestParam("userId") int customerId) {
-		List<CustomerVehiclePoliciesDto> policies = new ArrayList<>();
-		List<CustomerVehiclePolicy> cvp = is.ViewUserMotorPolicies(customerId);
-		for(CustomerVehiclePolicy policy : cvp) {
-			CustomerVehiclePoliciesDto temp = new CustomerVehiclePoliciesDto();
-			temp.setCustomerVehiclePolicyId(customerId);
-			
-		}
+		/*
+		 * List<CustomerVehiclePoliciesDto> policies = new ArrayList<>();
+		 * List<CustomerVehiclePolicy> cvp = is.ViewUserMotorPolicies(customerId);
+		 * for(CustomerVehiclePolicy policy : cvp) { CustomerVehiclePoliciesDto temp =
+		 * new CustomerVehiclePoliciesDto();
+		 * temp.setCustomerVehiclePolicyId(customerId);
+		 * 
+		 * }
+		 */
 		
 		/*
 		 * List<ViewVehicleClaimDto> claims = new ArrayList<>(); List<VehicleClaim>

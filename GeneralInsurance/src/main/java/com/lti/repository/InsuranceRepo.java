@@ -37,7 +37,7 @@ public interface InsuranceRepo {
 	public Vehicle addVehicle(Vehicle vehicle);
 	public Travel addTravel(Travel travel);
 	public CustomerTravelPolicy buyTravelInsurance(CustomerTravelPolicy ctp);
-	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy cvp);
+	public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy oldCvp,CustomerVehiclePolicy newCvp);
 	public CustomerTravelPolicy renewTravelInsurance(CustomerTravelPolicy ctp);
 	public void addNewQuery(ContactUs contactUs);
 	public String fetchQueryWithQueryId(int queryId);
@@ -68,6 +68,8 @@ public interface InsuranceRepo {
 	public List<Policy> viewAllPolicies();
 	public List<VehicleClaim> viewAllMotorClaims();
 	public List<TravelClaim> viewAllTravelClaims();
+	public void removeVehiclePolicy(CustomerVehiclePolicy cvp);
+	public void removeVehicleClaim(VehicleClaim vc);
 	//forgot password
 	Customer findCustomerByEmail(String userEmail);
 	String updateCustomerPassword(String password,String userEmail);

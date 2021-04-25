@@ -67,25 +67,28 @@ public class CustomerTravelPolicy {
 	public void setCoverageAmount(double coverageAmount) {
 		this.coverageAmount = coverageAmount;
 	}
+	@JsonIgnore
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	@JsonIgnore
 	public Policy getPolicy() {
 		return policy;
 	}
 	public void setPolicy(Policy policy) {
 		this.policy = policy;
 	}
+	@JsonIgnore
 	public Travel getTravel() {
 		return travel;
 	}
 	public void setTravel(Travel travel) {
 		this.travel = travel;
 	}
-	@JsonIgnore
+	
 	public TravelClaim getTravelClaim() {
 		return travelClaim;
 	}
