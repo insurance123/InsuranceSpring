@@ -60,7 +60,7 @@ public class InsuranceServiceImpl implements InsuranceService{
 		return ir.loginCustomer(userEmail, password);
 	}
 
-	public Admin loginAdmin(String adminEmail, String adminPassword) {
+	public LoginStatus loginAdmin(String adminEmail, String adminPassword) {
 		return ir.loginAdmin(adminEmail, adminPassword);
 	}
 
@@ -284,5 +284,15 @@ public class InsuranceServiceImpl implements InsuranceService{
         System.out.println("Mail sent");
         return otp;
     }
+	@Override
+	public List<VehicleClaim> viewAllMotorClaims() {
+		// TODO Auto-generated method stub
+		return ir.viewAllMotorClaims();
+	}
+	@Override
+	public List<TravelClaim> viewAllTravelClaims() {
+		// TODO Auto-generated method stub
+		return ir.viewAllTravelClaims();
+	}
 
 }

@@ -28,7 +28,7 @@ public interface InsuranceRepo {
 	public void addOrUpdateCustomer(Customer customer);
 	public void registerAdmin(Admin admin);
 	public LoginStatus loginCustomer(String userEmail, String password);
-	public Admin loginAdmin(String adminEmail, String adminPassword);
+	public LoginStatus loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
 	public Vehicle addVehicle(VehicleDto vehicle);
 	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
@@ -66,6 +66,8 @@ public interface InsuranceRepo {
 	boolean isCustomerPresent(String email);
 	public Document addRc(Document document);
 	public List<Policy> viewAllPolicies();
+	public List<VehicleClaim> viewAllMotorClaims();
+	public List<TravelClaim> viewAllTravelClaims();
 	//forgot password
 	Customer findCustomerByEmail(String userEmail);
 	String updateCustomerPassword(String password,String userEmail);

@@ -7,6 +7,9 @@ public class LoginStatus extends Status {
 	private String userName;
 	private String password;
 	private String userStatus;
+	private String adminEmail;
+	private int adminId;
+	private String adminStatus;
 	public String getUserEmail() {
 		return userEmail;
 	}
@@ -36,6 +39,24 @@ public class LoginStatus extends Status {
 	}
 	public void setUserId(int userId) {
 		this.userId = userId;
+	}
+	public String getAdminEmail() {
+		return adminEmail;
+	}
+	public void setAdminEmail(String adminEmail) {
+		this.adminEmail = adminEmail;
+	}
+	public int getAdminId() {
+		return adminId;
+	}
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+	public String getAdminStatus() {
+		return adminStatus;
+	}
+	public void setAdminStatus(String adminStatus) {
+		this.adminStatus = adminStatus;
 	}
 	
 	

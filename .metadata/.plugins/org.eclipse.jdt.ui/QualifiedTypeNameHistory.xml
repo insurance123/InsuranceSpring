@@ -49,15 +49,15 @@
     <fullyQualifiedTypeName name="com.sun.mail.handlers.multipart_mixed"/>
     <fullyQualifiedTypeName name="org.springframework.web.multipart.MultipartFile"/>
     <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonIgnore"/>
-    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
-    <fullyQualifiedTypeName name="com.lti.dto.LoginStatus"/>
-    <fullyQualifiedTypeName name="com.lti.entity.TravelClaim"/>
     <fullyQualifiedTypeName name="com.lti.dto.ViewTravelClaimDto"/>
     <fullyQualifiedTypeName name="com.lti.entity.ClaimStatus"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="com.lti.dto.ViewVehicleClaimDto"/>
     <fullyQualifiedTypeName name="javax.persistence.TypedQuery"/>
-    <fullyQualifiedTypeName name="com.lti.entity.VehicleClaim"/>
     <fullyQualifiedTypeName name="java.util.List"/>
     <fullyQualifiedTypeName name="java.util.Random"/>
+    <fullyQualifiedTypeName name="com.lti.dto.LoginStatus"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.GetMapping"/>
+    <fullyQualifiedTypeName name="com.lti.entity.TravelClaim"/>
+    <fullyQualifiedTypeName name="com.lti.entity.VehicleClaim"/>
 </qualifiedTypeNameHistroy>

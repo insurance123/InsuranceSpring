@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.dto.AadharCardDto;
 import com.lti.dto.CustomerTravelPolicyDto;
+import com.lti.dto.CustomerVehiclePoliciesDto;
 import com.lti.dto.CustomerVehiclePolicyDto;
 import com.lti.dto.DocumentDto;
 import com.lti.dto.LoginDto;
@@ -157,28 +158,10 @@ public class InsuranceController {
 	   public LoginStatus loginCustomer(@RequestBody LoginDto loginData, HttpSession session) {
 		 return is.loginCustomer(loginData.getUserEmail(), loginData.getPassword());
 	 }
-//	 public LoginStatus loginCustomer(@RequestBody LoginDto loginData) {
-//	 	try {
-//			 Customer customer = is.loginCustomer(loginData.getUserEmail(),loginData.getPassword());
-//			 LoginStatus lstatus = new LoginStatus();
-//			 lstatus.setStatus(LoginStatusType.SUCCESS);
-//			 lstatus.setMessage("Login Successful");
-//			 lstatus.setUserEmail(customer.getUserEmail());
-//			 lstatus.setPassword(customer.getPassword());
-//			 return lstatus;
-//			 
-//			
-//		} catch (NoResultException nre) {
-//			LoginStatus loginStatus = new LoginStatus();
-//			loginStatus.setStatus(LoginStatusType.FAILURE);
-//			loginStatus.setMessage(nre.getMessage());
-//			return loginStatus;
-//		}
-//	 }
-//	 
+
 	 
 	 @PostMapping(value = "/loginadmin")
-	    public Admin loginAdmin(@RequestBody LoginDto loginData, HttpSession session) {
+	    public LoginStatus loginAdmin(@RequestBody LoginDto loginData, HttpSession session) {
 	        return is.loginAdmin(loginData.getAdminEmail(), loginData.getPassword());
 	    }
 
@@ -271,6 +254,28 @@ public class InsuranceController {
 	
 	@GetMapping(value="/getVehiclePolicies")
 	public List<CustomerVehiclePolicy> ViewUserMotorPolicies(@RequestBody @RequestParam("userId") int customerId) {
+		List<CustomerVehiclePoliciesDto> policies = new ArrayList<>();
+		List<CustomerVehiclePolicy> cvp = is.ViewUserMotorPolicies(customerId);
+		for(CustomerVehiclePolicy policy : cvp) {
+			CustomerVehiclePoliciesDto temp = new CustomerVehiclePoliciesDto();
+			temp.setCustomerVehiclePolicyId(customerId);
+			
+		}
+		
+		/*
+		 * List<ViewVehicleClaimDto> claims = new ArrayList<>(); List<VehicleClaim>
+		 * vehicleclaims = is.viewPendingMotorClaims(); for(VehicleClaim claim:
+		 * vehicleclaims) { ViewVehicleClaimDto temp = new ViewVehicleClaimDto();
+		 * temp.setClaimId(claim.getClaimId());
+		 * temp.setClaimAmount(claim.getClaimAmount());
+		 * temp.setClaimStatus(claim.getClaimStatus());
+		 * temp.setClaimDate(claim.getClaimDate());
+		 * temp.setProofOfClaim(claim.getProofOfClaim());
+		 * temp.setReasonOfClaim(claim.getReasonOfClaim());
+		 * temp.setCustomerVehiclePolicyId(claim.getCustomerVehiclePolicy().
+		 * getCustomerVehiclePolicyId()); claims.add(temp); //System.out.println(temp);
+		 * } return claims;
+		 */
 		return is.ViewUserMotorPolicies(customerId);
 	}
 	
@@ -451,6 +456,17 @@ public class InsuranceController {
 	public List<Policy> viewAllPolicies() {
 		return is.viewAllPolicies();
 	}
+	
+	@GetMapping(value = "/viewAllMotorClaims")
+	public List<VehicleClaim> viewAllMotorClaims(){
+		return is.viewAllMotorClaims();
+	}
+	
+	@GetMapping(value = "/viewAllTravelClaims")
+	public List<TravelClaim> viewAllTravelClaims(){
+		return is.viewAllTravelClaims();
+	}
+	
 	
 	//forgot password:
 	@PutMapping(value = "/updatecustomerpassword")

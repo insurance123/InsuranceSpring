@@ -29,7 +29,7 @@ public interface InsuranceService {
 	public void addOrUpdateCustomer(Customer customer);
 	public void registerAdmin(Admin admin);
 	public LoginStatus loginCustomer(String userEmail, String password);
-	public Admin loginAdmin(String adminEmail, String adminPassword);
+	public LoginStatus loginAdmin(String adminEmail, String adminPassword);
 	public List<Policy> getAQuote(String policyFor);
 	public CustomerVehiclePolicy buyMotorInsurance(CustomerVehiclePolicyDto cvp);
 	public Vehicle addVehicle(VehicleDto vehicle);
@@ -64,6 +64,8 @@ public interface InsuranceService {
 	public Travel findTravelById(int travelId);
 	public List<Policy> getPolicyFor(String policyFor);
 	public List<Policy> viewAllPolicies();
+	public List<VehicleClaim> viewAllMotorClaims();
+	public List<TravelClaim> viewAllTravelClaims();
 	public void addOrUpdateOldCustomer(Customer customer);
 
 	

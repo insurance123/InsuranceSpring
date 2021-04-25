@@ -83,14 +83,25 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		}
 		
 		// Admin login creds
-		public Admin loginAdmin(String adminEmail, String adminPassword) {
+		public LoginStatus loginAdmin(String adminEmail, String adminPassword) {
 			String jpql = "select a from Admin a where a.adminEmail=:aEmail AND a.password=:pass";
 			Query query = em.createQuery(jpql);
 			query.setParameter("aEmail", adminEmail);
 			query.setParameter("pass", adminPassword);
-			Admin admin = (Admin) query.getSingleResult();
+			LoginStatus lstatus = new LoginStatus();
+			try {
+				Admin admin = (Admin) query.getSingleResult();
+				lstatus.setAdminId(admin.getAdminId());
+				lstatus.setAdminEmail(admin.getAdminEmail());
+				lstatus.setAdminStatus("Success");
+				return lstatus;
+			}
+			catch (Exception e) {
+				lstatus.setAdminStatus("Failed");
+				return lstatus;
+			}
 
-			return admin;
+
 		}
 		
 		//getAQuote
@@ -434,6 +445,22 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 	        int int_random = rand.nextInt(upperbound);
 	        return int_random;
 	    }
+
+	@Override
+	public List<VehicleClaim> viewAllMotorClaims() {
+		String jpql = "select v from VehicleClaim v";
+		TypedQuery<VehicleClaim> query = em.createQuery(jpql,VehicleClaim.class);
+		List<VehicleClaim> vc = query.getResultList();
+		return vc;
+	}
+
+	@Override
+	public List<TravelClaim> viewAllTravelClaims() {
+		String jpql = "select t from TravelClaim t";
+		TypedQuery<TravelClaim> query = em.createQuery(jpql,TravelClaim.class);
+		List<TravelClaim> tc = query.getResultList();
+		return tc;
+	}
 		
 		
 		
