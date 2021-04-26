@@ -112,7 +112,7 @@ public class InsuranceController {
 	 @PostMapping("/aadhar-upload")
 //		public RegisterStatus upload(AadharCardDto aadharCardDto) {​​​​​​​
 		public RegisterStatus upload(AadharCardDto aadharCardDto) {
-				String imageUploadLocation = "D:/Project Gladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
+				String imageUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
 		        String fileName = aadharCardDto.getAadharCard().getOriginalFilename();
 		        String targetFile = imageUploadLocation + fileName;
 		        try {
