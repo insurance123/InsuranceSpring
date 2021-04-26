@@ -112,7 +112,7 @@ public class InsuranceController {
 	 @PostMapping("/aadhar-upload")
 //		public RegisterStatus upload(AadharCardDto aadharCardDto) {​​​​​​​
 		public RegisterStatus upload(AadharCardDto aadharCardDto) {
-				String imageUploadLocation = "C:/Users/ADMIN/Documents/general/src/assets/uploads/";
+				String imageUploadLocation = "D:/Project Gladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
 		        String fileName = aadharCardDto.getAadharCard().getOriginalFilename();
 		        String targetFile = imageUploadLocation + fileName;
 		        try {
@@ -138,7 +138,7 @@ public class InsuranceController {
 	 @PostMapping("/rc-upload")
 	 public Document rcUpload(@ModelAttribute DocumentDto documentDto) {
 		 System.out.println(documentDto.getRcBook());
-		 String documentUploadLocation = "C:/Users/ADMIN/Documents/general/src/assets/uploads/";
+		 String documentUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
 		 
 		 String targetFile = documentUploadLocation + "rc-" +documentDto.getUserId() +documentDto.getRcBook().getOriginalFilename();
 		 try {
@@ -181,7 +181,12 @@ public class InsuranceController {
 	 @PostMapping(value="addVehicle") 
 		public Vehicle addVehicle(@RequestBody VehicleDto vehicle) {
 //			vehicle.setCustomer(dao.findCustomerById(userId));
-			return is.addVehicle(vehicle);
+		 try {
+			 return is.addVehicle(vehicle);
+		 } catch(Exception e) {
+			 return null;
+		 }
+			
 		}
 		
 		@PostMapping(value="buyTravelInsurance")
@@ -288,7 +293,7 @@ public class InsuranceController {
 
 	@PostMapping(value="/applyMotorClaim")
     public VehicleClaim addMotorClaim(@ModelAttribute VehicleClaimDto vcDto) {
-        String imageUploadLocation = "C:/Users/ADMIN/Documents/general/src/assets/uploads/";
+        String imageUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
 //        String imageUploadLocation = "e:/";
         String fileName = "VehicleClaimProof-"+vcDto.getCustomerVehiclePolicyId()+vcDto.getProofOfClaim().getOriginalFilename();
         String targetFile = imageUploadLocation + fileName;
@@ -330,7 +335,7 @@ public class InsuranceController {
 
 	@PostMapping(value="/applyTravelClaim")
     public TravelClaim addTravelClaim(@ModelAttribute TravelClaimDto tcDto) {
-        String imageUploadLocation = "e:/GeneralInsuranceProject/angular/PostSprint1Angular/InsuranceAngular/src/assets/uploads/";
+        String imageUploadLocation = "D:/ProjectGladiator/GitRepo/InsuranceAngular/src/assets/uploads/";
 //        String imageUploadLocation = "e:/";
         String fileName = "travelClaimProof-"+tcDto.getCustomerTravelPolicyId()+tcDto.getProofOfClaim().getOriginalFilename();
         String targetFile = imageUploadLocation + fileName;
