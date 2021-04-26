@@ -288,7 +288,7 @@ public class InsuranceController {
 
 	@PostMapping(value="/applyMotorClaim")
     public VehicleClaim addMotorClaim(@ModelAttribute VehicleClaimDto vcDto) {
-        String imageUploadLocation = "C:/Users/ADMIN/Documents/general/src/assets/uploads/";
+        String imageUploadLocation = "e:/GeneralInsuranceProject/angular/PostSprint1Angular/InsuranceAngular/src/assets/uploads/";
 //        String imageUploadLocation = "e:/";
         String fileName = "VehicleClaimProof-"+vcDto.getCustomerVehiclePolicyId()+vcDto.getProofOfClaim().getOriginalFilename();
         String targetFile = imageUploadLocation + fileName;
@@ -298,12 +298,10 @@ public class InsuranceController {
         catch (IOException e) {
             e.printStackTrace();
         }
-        CustomerVehiclePolicy cv = dao.findCustomerVehiclePolicyById(vcDto.getCustomerVehiclePolicyId());
         VehicleClaim claim = new VehicleClaim();
         claim.setClaimDate(LocalDate.now());
         claim.setReasonOfClaim(vcDto.getReasonOfClaim());
         claim.setProofOfClaim(fileName);
-        claim.setClaimAmount(cv.getCoverageAmount());
         claim.setCustomerVehiclePolicy(dao.findCustomerVehiclePolicyById(vcDto.getCustomerVehiclePolicyId()));
         return is.addMotorClaim(claim);
     }
@@ -462,41 +460,13 @@ public class InsuranceController {
 	}
 	
 	@GetMapping(value = "/viewAllMotorClaims")
-	public List<ViewVehicleClaimDto> viewAllMotorClaims(){
-		List<ViewVehicleClaimDto> claims = new ArrayList<>();
-        List<VehicleClaim> vehicleclaims = is.viewPendingMotorClaims();
-        for(VehicleClaim claim: vehicleclaims) {
-        	ViewVehicleClaimDto temp = new ViewVehicleClaimDto();
-        	temp.setClaimId(claim.getClaimId());
-        	temp.setClaimAmount(claim.getClaimAmount());
-        	temp.setClaimStatus(claim.getClaimStatus());
-        	temp.setClaimDate(claim.getClaimDate());
-        	temp.setProofOfClaim(claim.getProofOfClaim());
-        	temp.setReasonOfClaim(claim.getReasonOfClaim());
-        	temp.setCustomerVehiclePolicyId(claim.getCustomerVehiclePolicy().getCustomerVehiclePolicyId());
-        	claims.add(temp);
-        	//System.out.println(temp);
-        }
-        return claims;
+	public List<VehicleClaim> viewAllMotorClaims(){
+		return is.viewAllMotorClaims();
 	}
 	
 	@GetMapping(value = "/viewAllTravelClaims")
-	public List<ViewTravelClaimDto> viewAllTravelClaims(){
-		List<ViewTravelClaimDto> claims = new ArrayList<>();
-        List<TravelClaim> travelclaims =is.viewPendingTravelClaims();
-        for(TravelClaim claim: travelclaims) {
-        	ViewTravelClaimDto temp = new ViewTravelClaimDto();
-        	temp.setClaimId(claim.getClaimId());
-        	temp.setClaimAmount(claim.getClaimAmount());
-        	temp.setClaimStatus(claim.getClaimStatus());
-        	temp.setClaimDate(claim.getClaimDate());
-        	temp.setProofOfClaim(claim.getProofOfClaim());
-        	temp.setReasonOfClaim(claim.getReasonOfClaim());
-        	temp.setCustomerTravelPolicyId(claim.getCustomerTravelPolicy().getCustomerTravelPolicyId());
-        	claims.add(temp);
-        	//System.out.println(temp);
-        }
-        return claims;
+	public List<TravelClaim> viewAllTravelClaims(){
+		return is.viewAllTravelClaims();
 	}
 	
 	

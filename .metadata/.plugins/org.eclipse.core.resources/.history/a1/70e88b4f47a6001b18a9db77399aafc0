@@ -180,7 +180,6 @@ public class InsuranceRepoImpl implements InsuranceRepo{
 		//renewMotorInsurance
 		@Transactional
 		public CustomerVehiclePolicy renewMotorInsurance(CustomerVehiclePolicy oldCvp, CustomerVehiclePolicy newCvp){
-			System.out.println(oldCvp.getCustomerVehiclePolicyId());
 			try {
 				VehicleClaim vc  = oldCvp.getVehicleClaim();
 				removeVehicleClaim(vc);

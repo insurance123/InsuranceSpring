@@ -481,22 +481,8 @@ public class InsuranceController {
 	}
 	
 	@GetMapping(value = "/viewAllTravelClaims")
-	public List<ViewTravelClaimDto> viewAllTravelClaims(){
-		List<ViewTravelClaimDto> claims = new ArrayList<>();
-        List<TravelClaim> travelclaims =is.viewPendingTravelClaims();
-        for(TravelClaim claim: travelclaims) {
-        	ViewTravelClaimDto temp = new ViewTravelClaimDto();
-        	temp.setClaimId(claim.getClaimId());
-        	temp.setClaimAmount(claim.getClaimAmount());
-        	temp.setClaimStatus(claim.getClaimStatus());
-        	temp.setClaimDate(claim.getClaimDate());
-        	temp.setProofOfClaim(claim.getProofOfClaim());
-        	temp.setReasonOfClaim(claim.getReasonOfClaim());
-        	temp.setCustomerTravelPolicyId(claim.getCustomerTravelPolicy().getCustomerTravelPolicyId());
-        	claims.add(temp);
-        	//System.out.println(temp);
-        }
-        return claims;
+	public List<TravelClaim> viewAllTravelClaims(){
+		return is.viewAllTravelClaims();
 	}
 	
 	
