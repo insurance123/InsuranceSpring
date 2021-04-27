@@ -216,7 +216,7 @@ public class InsuranceController {
             newCvp.setCoverageAmount(oldCvp.getCoverageAmount());
             newCvp.setPremiumAmount(oldCvp.getPremiumAmount());
             newCvp.setStartDate(LocalDate.now());
-            newCvp.setEndDate(LocalDate.of(2022, 04, 24));
+            newCvp.setEndDate(LocalDate.now().plusYears(1));
             newCvp.setVehicle(oldCvp.getVehicle());
             newCvp.setCustomer(oldCvp.getCustomer());
             newCvp.setPolicy(oldCvp.getPolicy());

@@ -111,7 +111,7 @@ public class InsuranceServiceImpl implements InsuranceService{
         
             ir.addNewQuery(contactUs);
             String subject="Your query is received";
-            String text="Hi "+contactUs.getUserName()+". We have recieved your query. Our experts will contact you soon!";
+            String text="Hi "+contactUs.getUserName()+". We have received your query. Our experts will contact you soon!";
             emailService.sendEmailForNewRegistration(contactUs.getUserEmail(),text,subject);
        
         
