@@ -1,0 +1,3 @@
+# Online Vehicle Insurance Backend
+
+This project serves as the robust backend infrastructure powering an advanced online vehicle insurance platform. Specifically designed to enhance user experiences, the backend seamlessly facilitates crucial functionalities such as purchasing new insurance policies, renewing existing ones, and managing various transactions related to vehicle insurance. Developed with the efficiency and scalability of Spring Boot, the backend ensures a resilient and high-performance foundation for the entire insurance system. Leveraging Oracle Database for data storage, retrieval, and management, the project maintains a secure and organized repository of essential information.
